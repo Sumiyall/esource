@@ -40,6 +40,13 @@
       "quantity": 234,
       "price": 22000,
       "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "Утас",
+      "code": "#00012",
+      "quantity": 234,
+      "price": 22000,
+      "imagePath": "assets/images/logo1.png"
     }
     
   ]

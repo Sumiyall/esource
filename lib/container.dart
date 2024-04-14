@@ -45,7 +45,7 @@ class _ContainerPageState extends State<ContainerPage> {
                   ),
                   icon: const Icon(Icons.add_box_outlined),
                   label: const Text(
-                    'Хүсэлт гаргах',
+                    'Хүсэлт гаргах!',
                     style: TextStyle(fontSize: 16, color: Colors.white, fontFamily: 'Mogul3'),
                   ),
                 ),
