@@ -1,0 +1,45 @@
+[
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "Утас",
+      "code": "#00012",
+      "quantity": 234,
+      "price": 22000,
+      "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/logo1.png"
+    },
+    {
+      "name": "Утас",
+      "code": "#00012",
+      "quantity": 234,
+      "price": 22000,
+      "imagePath": "assets/images/logo1.png"
+    }
+    
+  ]
