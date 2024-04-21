@@ -1,17 +1,18 @@
-import 'package:esource/home_page.dart';
+import 'home_page1.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage1 extends StatefulWidget {
+  const LoginPage1({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPage1State createState() => _LoginPage1State();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPage1State extends State<LoginPage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 80),
-            Image.asset('assets/images/logo1.png', 
+            Image.asset('assets/images/logopng.png', 
               width: 300,
               height: 140,
             ),
@@ -35,12 +36,12 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 32),
             TextField(
               decoration: InputDecoration(
-                labelText: 'Хэрэглэгчийн нэр',
+                labelText: 'Ажилтаны нэр',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(
-                    color: Colors.grey.withOpacity(0.5), // Adjust opacity to make it lighter
-                    width: 1.0, // Decrease width to make it thinner
+                    color: Colors.grey.withOpacity(0.5), 
+                    width: 1.0, 
                   ),
                 ),
                 filled: true,
@@ -58,15 +59,15 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: 'Нууц үг',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0), // Set border radius
-                  borderSide: BorderSide( // Customize border thickness and color
-                    color: Colors.grey, // Change to the desired border color
-                    width: 2.0, // Adjust the border thickness
+                  borderRadius: BorderRadius.circular(10.0), 
+                  borderSide: BorderSide( 
+                    color: Colors.grey, 
+                    width: 2.0, 
                   ),
                 ),
                 filled: true,
-                fillColor: Color.fromARGB(255, 255, 255, 255), // Change to the desired background color
-                prefixIcon: Icon(Icons.lock_person), // Add an icon to the left of the input field
+                fillColor: Color.fromARGB(255, 255, 255, 255), 
+                prefixIcon: Icon(Icons.lock_person),
               ),
             ),
 

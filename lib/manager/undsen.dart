@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile.dart';
 
 class UndsenPage extends StatelessWidget {
   const UndsenPage({Key? key}) : super(key: key);
@@ -39,52 +40,52 @@ class UndsenPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(19.0),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          backgroundImage: NetworkImage('https://th-thumbnailer.cdn-si-edu.com/5a79C6jJ8BrChMX5tgEKiMI_qqo=/1000x750/filters:no_upscale():focal(792x601:793x602)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/52/e4/52e44474-c2dc-41e0-bb77-42a904695196/this-image-shows-a-portrait-of-dragon-man-credit-chuang-zhao_web.jpg'),
-                          radius: 27,
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Sumyia Battss',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18
-                                ),
-                              ),
-                              Text(
-                                'manager gsh',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(19.0),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/image.png'),
+                            radius: 27,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Handle arrow_forward_ios icon press
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CalendarPage()),
-                            );
-                          },
-                          child: const Icon(
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Sumyia Battss',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                  ),
+                                ),
+                                Text(
+                                  'manager gsh',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
                             Icons.arrow_forward_ios,
                             color: Colors.white,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
+
                   const Divider(
                     color: Colors.white,
                     height: 7,

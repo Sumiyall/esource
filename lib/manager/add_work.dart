@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'undsen.dart';
-import 'package:esource/work/work_req_table.dart';
-import 'package:esource/work/appliance_req_table.dart';
+import 'package:esource/manager/work/work_req_table.dart';
+import 'package:esource/manager/work/appliance_req_table.dart';
+import 'work/home_appliance/add_home_work.dart'; 
+import 'work/tech_appliance/add_tech_work.dart';
+import 'work/outdoor_appliance/add_out_work.dart';
 
 class AddWorkPage extends StatefulWidget {
   const AddWorkPage({Key? key}) : super(key: key);
@@ -17,9 +20,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // backgroundColor: Color(0xFF4894FE),        
         title: const Text(
           'Ажил',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, ),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -52,8 +56,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
                   _buildCategoryCard('assets/images/addWork/ger1.png', 'Технологи'),
                 ],
               ),
-
-
               WorkRequestsTable(
                 selectedDuration: _selectedDuration,
                 onDurationChanged: (String? newValue) {
@@ -62,7 +64,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
                   });
                 },
               ),
-
               ApplianceReqTable(
                 selectedDuration: _selectedDuration,
                 onDurationChanged: (String? newValue) {
@@ -71,8 +72,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
                   });
                 },
               ),
-
-
             ],
           ),
         ),
@@ -83,11 +82,27 @@ class _AddWorkPageState extends State<AddWorkPage> {
   Widget _buildCategoryCard(String imagePath, String title) {
     return GestureDetector(
       onTap: () {
-        // Navigate to another page here
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => UndsenPage()),
-        );
+        if (title == 'Гэр ахуй') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddHomeWorkPage()),
+          );
+        } else if (title == 'Технологи') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTechWorkPage()),
+          );
+        } else if (title == 'Гадна талбай') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddOutWorkPage()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => UndsenPage()),
+          );
+        }
       },
       child: Column(
         children: [

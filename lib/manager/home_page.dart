@@ -35,12 +35,12 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Color(0xFF4894FE),
 
         selectedIconTheme: IconThemeData(
-          size: 30, // Adjust the size of the selected icon
-          color: Color(0xFF4894FE), // Adjust the color of the selected icon
+          size: 30, 
+          color: Color(0xFF4894FE), 
         ),
         unselectedIconTheme: IconThemeData(
-          size: 24, // Adjust the size of the unselected icons
-          color: Colors.grey, // Adjust the color of the unselected icons
+          size: 24, 
+          color: Colors.grey, 
         ),
 
         items: const [

@@ -1,37 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import '../../provider/table_provider.dart';
 
-class ContainerTable extends StatefulWidget {
-  @override
-  _ContainerTableState createState() => _ContainerTableState();
-}
-
-class _ContainerTableState extends State<ContainerTable> {
-  List<Map<String, dynamic>> _workRequests = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadWorkRequests();
-  }
-
-  Future<void> _loadWorkRequests() async {
-    try {
-      String jsonData = await rootBundle.loadString('assets/table_data.json');
-      print("test");
-      List<dynamic> itemsJson = json.decode(jsonData);
-      List<Map<String, dynamic>> items = itemsJson.cast<Map<String, dynamic>>();
-      setState(() {
-        _workRequests = items;
-      });
-    } catch (e) {
-      print('Error loading table data: $e');
-    }
-  }
-
+class ContainerTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final tableDataProvider = Provider.of<TableDataProvider>(context);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,8 +69,7 @@ class _ContainerTableState extends State<ContainerTable> {
                   ),
                 ],
               ),
-              
-              ..._workRequests.map((request) {
+              ...tableDataProvider.tableData.map((item) {
                 return TableRow(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 225, 244, 255),
@@ -104,7 +80,7 @@ class _ContainerTableState extends State<ContainerTable> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.asset(
-                          request['imagePath'] ?? '',
+                          item['imagePath'] ?? '',
                           width: 50,
                           height: 50,
                           fit: BoxFit.cover,
@@ -113,19 +89,19 @@ class _ContainerTableState extends State<ContainerTable> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(request['name'] ?? ''),
+                      child: Text(item['name'] ?? ''),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(request['code'] ?? ''),
+                      child: Text(item['code'] ?? ''),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(request['quantity']?.toString() ?? ''),
+                      child: Text(item['quantity']?.toString() ?? ''),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(request['price']?.toString() ?? ''),
+                      child: Text(item['price']?.toString() ?? ''),
                     ),
                   ],
                 );

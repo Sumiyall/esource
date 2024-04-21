@@ -1,0 +1,80 @@
+[
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/socket.png"
+    },
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/socket.png"
+    },
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Item 2",
+      "code": "#00002",
+      "quantity": 5,
+      "price": 2000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/socket.png"
+    },
+    {
+      "name": "LED гэрэл",
+      "code": "#00001",
+      "quantity": 216,
+      "price": 5000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Item 2",
+      "code": "#00002",
+      "quantity": 5,
+      "price": 2000,
+      "imagePath": "assets/images/light.jpg"
+    },
+    {
+      "name": "Цахилгуураг",
+      "code": "#00034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/socket.png"
+    }
+    
+  ]

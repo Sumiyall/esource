@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import '../add_work.dart';
 
-class ApplianceReqTable extends StatefulWidget {
+class WorkRequestsTable extends StatefulWidget {
   final String selectedDuration;
   final Function(String?) onDurationChanged;
 
-  const ApplianceReqTable({
+  const WorkRequestsTable({
     Key? key,
     required this.selectedDuration,
     required this.onDurationChanged,
   }) : super(key: key);
 
   @override
-  _ApplianceReqTableState createState() => _ApplianceReqTableState();
+  _WorkRequestsTableState createState() => _WorkRequestsTableState();
 }
 
-class _ApplianceReqTableState extends State<ApplianceReqTable> {
-  List<Map<String, dynamic>> _getApplianceRequests() {
+class _WorkRequestsTableState extends State<WorkRequestsTable> {
+  List<Map<String, dynamic>> _getWorkRequests() {
     // Replace this with your actual data retrieval logic based on the selected duration
     if (widget.selectedDuration == 'Сүүлийн 7 хоног') {
       return [
@@ -24,7 +25,7 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
         {'name': 'Batts Dulguun', 'huselt': 2, 'batalga': 12},
       ];
     } else {
-      // Placeholder data for other durations
+    
       return [];
     }
   }
@@ -39,7 +40,7 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Ирсэн хүсэлтүүд',
+              'Ажлын хүсэлтүүд',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -71,11 +72,7 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Нэр',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, 
-                        fontFamily: 'Mogul3',
-                        color: Color.fromARGB(255, 92, 111, 136),
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Mogul3'),
                     ),
                   ),
                 ),
@@ -84,11 +81,7 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Хүсэлт',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, 
-                        fontFamily: 'Mogul3',
-                        color: Color.fromARGB(255, 92, 111, 136),
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Mogul3'),
                     ),
                   ),
                 ),
@@ -97,17 +90,13 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Баталгаажсан',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, 
-                        fontFamily: 'Mogul3',
-                        color: Color.fromARGB(255, 92, 111, 136),
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Mogul3'),
                     ),
                   ),
                 ),
               ],
             ),
-            ..._getApplianceRequests().map((request) {
+            ..._getWorkRequests().map((request) {
               return TableRow(
                 children: [
                   TableCell(
