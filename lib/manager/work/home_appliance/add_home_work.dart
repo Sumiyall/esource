@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'home_task_list.dart';
 import '../../../provider/task_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AddHomeWorkPage extends StatefulWidget {
   @override
@@ -93,6 +95,41 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
     }
   }
 
+//   void _submitForm() {
+//   if (_formKey.currentState!.validate() &&
+//       _selectedType != null &&
+//       _selectedBrand != null &&
+//       _selectedModel != null &&
+//       _selectedNumber != null) {
+//     final task = {
+//       'name': _nameController.text,
+//       'phone': _phoneController.text,
+//       'address': _addressController.text,
+//       'description': _descriptionController.text,
+//       'type': _selectedType!,
+//       'brand': _selectedBrand!,
+//       'model': _selectedModel!,
+//       'number': _selectedNumber!,
+//       'category': _selectedCategory,
+//       'image': _selectedImage != null ? _selectedImage!.path : '',
+//     };
+    
+//     // Save the task to Firebase Realtime Database
+//     FirebaseDatabase.instance.reference().child('tasks').push().set(task);
+    
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+//     );
+//   } else {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text('Please fill in all the fields.'),
+//       ),
+//     );
+//   }
+// }
+
   void _submitForm() {
   if (_formKey.currentState!.validate() &&
       _selectedType != null &&
@@ -111,20 +148,31 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
       'category': _selectedCategory,
       'image': _selectedImage != null ? _selectedImage!.path : '',
     };
-    Provider.of<TaskProvider>(context, listen: false).addTask(task);
+    
+    // Save the task to Firebase Realtime Database
+    final databaseURL = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+  DatabaseReference tasksRef = FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
+  tasksRef.push().set(task).then((_) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => HomeTaskListPage()),
     );
-  } else {
+  }).catchError((error) {
+    print('Error saving task: $error');
+    // Display an error message to the user
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Бүх талбарыг бөглөнө үү.'),
+        content: Text('Failed to save the task. Please try again.'),
       ),
     );
-  }
-}
+  });}}
 
+
+// hjdfgkjsdfhgl
+//hasdgfjhasd
+// ajshdfasdhjf
+// ahsdflasdhf
+// sdfhal
   @override
   Widget build(BuildContext context) {
     return Scaffold(

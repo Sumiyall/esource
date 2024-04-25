@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class HomeTaskDetailsPage extends StatefulWidget {
-  final Map<String, String> task;
-  final Function(Map<String, String>) onSave;
+  final Map<String, dynamic> task;
+  final Function(Map<String, dynamic>) onSave;
   final Function() onDelete;
 
   const HomeTaskDetailsPage({
@@ -187,23 +187,23 @@ class _HomeTaskDetailsPageState extends State<HomeTaskDetailsPage> {
   }
 
   void _saveTask() {
-    final updatedTask = {
-      'name': _nameController.text,
-      'phone': _phoneController.text,
-      'address': _addressController.text,
-      'type': _typeController.text,
-      'brand': _brandController.text,
-      'model': _modelController.text,
-      'number': _numberController.text,
-      'description': _descriptionController.text,
-      'category': _categoryController.text,
-      'date': _dateController.text,
-      'assignedWorker': _selectedWorker,
-    };
-
-    widget.onSave(updatedTask);
-    Navigator.pop(context);
-  }
+  final updatedTask = {
+    'name': _nameController.text,
+    'phone': _phoneController.text,
+    'address': _addressController.text,
+    'type': _typeController.text,
+    'brand': _brandController.text,
+    'model': _modelController.text,
+    'number': _numberController.text,
+    'description': _descriptionController.text,
+    'category': _categoryController.text,
+    'date': _dateController.text,
+    'assignedWorker': _selectedWorker,
+  };
+  
+  widget.onSave(updatedTask);
+  Navigator.pop(context);
+}
 
   void _deleteTask() {
     widget.onDelete();
