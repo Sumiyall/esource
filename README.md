@@ -1,16 +1,45 @@
-# esource
+# Цахилгаан хэрэгслийн засвар, үйлчилгээний бүртгэлийн программ
 
-A new Flutter project.
+Энэхүү програм нь цахилгаан хэрэгслийн засвар, үйлчилгээний бүртгэлийг хөтлөх зорилготой бөгөөд Flutter framework ашиглан хөгжүүлэгдсэн болно.
 
-## Getting Started
+## Онцлог шинж чанарууд
 
-This project is a starting point for a Flutter application.
+- Цахилгаан хэрэгслийн мэдээллийг бүртгэх, засварлах, устгах
+- Засвар, үйлчилгээний түүхийг хадгалах
+- Хэрэглэгчийн мэдээллийг удирдах
+- Тайлан, статистик үүсгэх
+- Зөөврийн төхөөрөмжүүд дээр ажиллах боломжтой (Android болон iOS)
 
-A few resources to get you started if this is your first Flutter project:
+## Суулгах заавар
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Энэ repository-г clone хийх эсвэл ZIP файлыг татаж авна уу.
+2. Шаардлагатай хамаарал (dependencies)-ыг суулгах:
+ `flutter pub get`
+3. Програмыг ажиллуулах:
+`flutter run`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+5. ## Ашигласан технологиуд
+- Flutter framework
+- Dart programming language
+- Firebase
+- NoSQL
+
+## Хувь нэмэр оруулах
+
+Хэрэв та энэ төсөлд хувь нэмрээ оруулахыг хүсвэл, та дараах алхмуудыг дагана уу:
+
+1. Энэ repository-г fork хийнэ үү.
+2. Шинэ branch үүсгэнэ үү: `git checkout -b my-new-feature`
+3. Өөрчлөлтүүдээ хийгээд, commit хийнэ үү: `git commit -am 'Add some feature'`
+4. Branch-руугаа push хийнэ үү: `git push origin my-new-feature`
+5. Pull request үүсгэнэ үү.
+
+## Лиценз
+
+Энэ төсөл нь [MIT License](LICENSE) дор хамрагдана.
+
+## Холбоо барих
+
+Хэрэв танд ямар нэгэн асуулт эсвэл санал хүсэлт байвал холбогдоно уу:
+
+- Имэйл: sumyab0701@gmail.com
