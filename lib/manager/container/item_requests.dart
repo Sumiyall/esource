@@ -1,11 +1,8 @@
-import 'dart:convert';
+// item_request.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../provider/table_provider.dart';
 import '../../provider/item_request_provider.dart';
-
-
 
 class ItemRequestPage extends StatefulWidget {
   const ItemRequestPage({Key? key}) : super(key: key);
@@ -15,45 +12,81 @@ class ItemRequestPage extends StatefulWidget {
 }
 
 class _ItemRequestPageState extends State<ItemRequestPage> {
-  List<Map<String, dynamic>> _pendingRequests = [];
+  List<Map<String, dynamic>> acceptedRequests = [];
 
   @override
-  void initState() {
-    super.initState();
-    fetchItemRequests();
+  Widget build(BuildContext context) {
+    final itemRequestProvider = Provider.of<ItemRequestProvider>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Ирсэн хүсэлтүүд',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: true,
+      ),
+      body: itemRequestProvider.pendingRequests.isEmpty
+          ? const Center(child: Text('Хүсэлт байхгүй байна'))
+          : ListView.builder(
+              itemCount: itemRequestProvider.pendingRequests.length,
+              itemBuilder: (context, index) {
+                final item = itemRequestProvider.pendingRequests[index];
+                return ListTile(
+                  leading: Image.asset(item['imagePath']),
+                  title: Text(item['name']),
+                  subtitle: Text('Code: ${item['code']}, Quantity: ${item['quantity']}, Price: ${item['price']}'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => acceptItemRequest(item, itemRequestProvider),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF4894FE),
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
+                        ),
+                        child: const Text('Тийм'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () => rejectItemRequest(item, itemRequestProvider),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 255, 35, 35),
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
+                        ),
+                        child: const Text('Үгүй'),
+                      ),
+                    ],
+                  ),
+                  onTap: () => showRequestDetails(item),
+                );
+              },
+            ),
+    );
   }
 
-  Future<void> fetchItemRequests() async {
-    await Future.delayed(const Duration(seconds: 0));
-    List<Map<String, dynamic>> itemRequests = [
-      {
-        'name': 'Бараа 1',
-        'code': '#00001',
-        'quantity': 10,
-        'price': 1000,
-        'imagePath': 'assets/images/light.jpg',
-      },
-      {
-        'name': 'Item 2',
-        'code': '#00002',
-        'quantity': 5,
-        'price': 2000,
-        'imagePath': 'assets/images/light.jpg',
-      },
-    ];
-    setState(() {
-      _pendingRequests = itemRequests;
-    });
-  }
-
-  Future<void> acceptItemRequest(Map<String, dynamic> item) async {
+  Future<void> acceptItemRequest(Map<String, dynamic> item, ItemRequestProvider itemRequestProvider) async {
     try {
       final tableDataProvider = Provider.of<TableDataProvider>(context, listen: false);
       tableDataProvider.addItemToTableData(item);
 
-      setState(() {
-        _pendingRequests.remove(item);
-      });
+      itemRequestProvider.removeRequest(item);
+
+      // Add the accepted request to the acceptedRequests list
+      final acceptedRequest = {
+        'name': item['name'],
+        'quantity': item['quantity'],
+        'code': item['code'],
+      };
+      acceptedRequests.add(acceptedRequest);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Хүсэлтийг зөвшөөрөн агуулах хэсэгт нэмэгдлээ')),
@@ -66,65 +99,35 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
     }
   }
 
-  void rejectItemRequest(Map<String, dynamic> item) {
-    setState(() {
-      _pendingRequests.remove(item);
-    });
+  void rejectItemRequest(Map<String, dynamic> item, ItemRequestProvider itemRequestProvider) {
+    itemRequestProvider.removeRequest(item);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Хүсэлт цуцлагдлаа')),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Ирсэн хүсэлтүүд',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+  void showRequestDetails(Map<String, dynamic> item) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(item['name']),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Code: ${item['code']}'),
+            Text('Quantity: ${item['quantity']}'),
+            Text('Price: ${item['price']}'),
+            const SizedBox(height: 16),
+            Text('Description: ${item['description'] ?? 'No description'}'),
+          ],
         ),
-        automaticallyImplyLeading: true,
-      ),
-      body: ListView.builder(
-        itemCount: _pendingRequests.length,
-        itemBuilder: (context, index) {
-          final item = _pendingRequests[index];
-          return ListTile(
-            leading: Image.asset(item['imagePath']),
-            title: Text(item['name']),
-            subtitle: Text('Code: ${item['code']}, Quantity: ${item['quantity']}, Price: ${item['price']}'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                  onPressed: () => acceptItemRequest(item),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF4894FE), 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
-                  ),
-                  child: const Text('Тийм'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () => rejectItemRequest(item),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 255, 35, 35), 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
-                  ),
-                  child: const Text('Үгүй'),
-                ),
-              ],
-            ),
-          );
-        },
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }

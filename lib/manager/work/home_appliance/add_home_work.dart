@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'home_task_list.dart';
 import '../../../provider/task_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddHomeWorkPage extends StatefulWidget {
   @override
@@ -17,10 +19,10 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
   final _addressController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-List<dynamic> _dropdownData = [];
-  String? _selectedType; 
-  String? _selectedBrand; 
-  String? _selectedModel; 
+  List<dynamic> _dropdownData = [];
+  String? _selectedType;
+  String? _selectedBrand;
+  String? _selectedModel;
   String? _selectedNumber;
   String _selectedCategory = 'Энгийн хугацаанд';
 
@@ -28,7 +30,7 @@ List<dynamic> _dropdownData = [];
   List<String> _models = [];
   List<String> _numbers = [];
 
-  List<Map<String, String>> _tasks = [];
+  File? _selectedImage;
 
   @override
   void initState() {
@@ -41,7 +43,7 @@ List<dynamic> _dropdownData = [];
     setState(() {
       _dropdownData = json.decode(jsonString)['types'];
       if (_dropdownData != null && _dropdownData.isNotEmpty) {
-        _selectedType = null; 
+        _selectedType = null;
         _updateBrands();
       }
     });
@@ -81,6 +83,16 @@ List<dynamic> _dropdownData = [];
     });
   }
 
+  Future<void> _selectImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = File(pickedImage.path);
+      });
+    }
+  }
+
   void _submitForm() {
   if (_formKey.currentState!.validate() &&
       _selectedType != null &&
@@ -97,6 +109,7 @@ List<dynamic> _dropdownData = [];
       'model': _selectedModel!,
       'number': _selectedNumber!,
       'category': _selectedCategory,
+      'image': _selectedImage != null ? _selectedImage!.path : '',
     };
     Provider.of<TaskProvider>(context, listen: false).addTask(task);
     Navigator.push(
@@ -112,260 +125,281 @@ List<dynamic> _dropdownData = [];
   }
 }
 
-
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text(
-        'Гэр ахуй',
-        style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Гэр ахуй',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: true,
       ),
-      automaticallyImplyLeading: true,
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeTaskListPage()),
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4894FE)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4894FE)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
                 ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add_circle_outline,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 6),
-                  Text(
-                    'Нэмэгдсэн ажлууд',
-                    style: TextStyle(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.add_circle_outline,
                       color: Colors.white,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Ажил нэмэх',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Хэрэглэгчийн хэсэг',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Овог нэр',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 12.0),
-                  TextFormField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(
-                      labelText: 'Утасны дугаар',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 12.0),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: InputDecoration(
-                      labelText: 'Гэрийн хаяг',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  SizedBox(height: 29.0),
-                  Text(
-                    'Засвар хийлгэх хэрэгслийн тодорхойлолт',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedType,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedType = newValue!;
-                        _updateBrands();
-                      });
-                    },
-                    items: _dropdownData.map<DropdownMenuItem<String>>((type) {
-                      return DropdownMenuItem<String>(
-                        value: type['name'],
-                        child: Text(type['name']),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Төрөл сонгоно уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedBrand,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedBrand = newValue!;
-                        _updateModels();
-                      });
-                    },
-                    items: _brands.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Бренд сонгоно уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedModel,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedModel = newValue!;
-                        _updateNumbers();
-                      });
-                    },
-                    items: _models.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Загвар сонгоно уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedNumber,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedNumber = newValue!;
-                      });
-                    },
-                    items: _numbers.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Дугаар сонгоно уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 45),
-                  Text(
-                    'Гэмтлийн талаарх дэлгэрэнгүй',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  TextFormField(
-                    controller: _descriptionController,
-                    decoration: InputDecoration(
-                      labelText: 'Тайлбар оруулна уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 45.0),
-                  Text(
-                    'Хугацааны хүсэлт',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedCategory,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedCategory = newValue!;
-                      });
-                    },
-                    items: <String>['Энгийн хугацаанд', 'Түргэн хугацаанд', 'Яаралтай']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Ангилал сонгоно уу',
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: Text(
-                      'Захиалах',
+                    SizedBox(width: 6),
+                    Text(
+                      'Нэмэгдсэн ажлууд',
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4894FE)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Ажил нэмэх',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Хэрэглэгчийн хэсэг',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Овог нэр',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 12.0),
+                    TextFormField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        labelText: 'Утасны дугаар',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 12.0),
+                    TextFormField(
+                      controller: _addressController,
+                      decoration: InputDecoration(
+                        labelText: 'Гэрийн хаяг',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    
+                    Text(
+                      'Засвар хийлгэх хэрэгслийн тодорхойлолт',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedType,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedType = newValue!;
+                          _updateBrands();
+                        });
+                      },
+                      items: _dropdownData.map<DropdownMenuItem<String>>((type) {
+                        return DropdownMenuItem<String>(
+                          value: type['name'],
+                          child: Text(type['name']),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Төрөл сонгоно уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedBrand,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedBrand = newValue!;
+                          _updateModels();
+                        });
+                      },
+                      items: _brands.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Бренд сонгоно уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedModel,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedModel = newValue!;
+                          _updateNumbers();
+                        });
+                      },
+                      items: _models.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Загвар сонгоно уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedNumber,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedNumber = newValue!;
+                        });
+                      },
+                      items: _numbers.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Дугаар сонгоно уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 45),
+                    Text(
+                      'Гэмтлийн талаарх дэлгэрэнгүй',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: _selectImage,
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: _selectedImage != null
+                            ? Image.file(
+                                _selectedImage!,
+                                fit: BoxFit.cover,
+                              )
+                            : Icon(
+                                Icons.add_a_photo,
+                                size: 50,
+                                color: Colors.grey,
+                              ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    SizedBox(height: 8.0),
+                    TextFormField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        labelText: 'Тайлбар оруулна уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 45.0),
+                    Text(
+                      'Хугацааны хүсэлт',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedCategory,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedCategory = newValue!;
+                        });
+                      },
+                      items: <String>['Энгийн хугацаанд', 'Түргэн хугацаанд', 'Яаралтай']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Ангилал сонгоно уу',
+                        labelStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: Text(
+                        'Захиалах',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4894FE)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

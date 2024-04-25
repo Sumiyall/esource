@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'manager/home_page.dart';
@@ -11,7 +12,9 @@ import 'provider/item_request_provider.dart';
 import 'splash_screen.dart';
 import 'provider/repair_details_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

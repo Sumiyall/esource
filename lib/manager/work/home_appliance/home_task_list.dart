@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'home_task_details/home_task_details.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,19 @@ class HomeTaskListPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: task['image'] != null && task['image']!.isNotEmpty
+                            ? DecorationImage(
+                                image: FileImage(File(task['image']!)),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                    ),
+                    SizedBox(height: 16),
                     Text(
                       task['name']!,
                       style: TextStyle(
@@ -118,7 +132,6 @@ class HomeTaskListPage extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-
                     SizedBox(height: 24),
                     Text(
                       'Date',

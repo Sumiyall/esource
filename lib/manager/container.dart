@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'container/container_table.dart';
 import 'container/item_requests.dart';
+import '../worker/worker_item_request/worker_item_request.dart';
 
 class ContainerPage extends StatefulWidget {
   const ContainerPage({Key? key}) : super(key: key);
@@ -29,12 +30,21 @@ class _ContainerPageState extends State<ContainerPage> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ItemRequestPage(),
-                        ),
-                      );
+                      if (ModalRoute.of(context)!.settings.arguments == true) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ItemRequestPage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WorkerItemRequestPage(),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 72, 148, 254),
@@ -47,7 +57,7 @@ class _ContainerPageState extends State<ContainerPage> {
                     ),
                     icon: const Icon(Icons.add_box_outlined),
                     label: const Text(
-                      'Ирсэн хүсэлтүүд!',
+                      '    Хүсэлт     ',
                       style: TextStyle(fontSize: 16, color: Colors.white, fontFamily: 'Mogul3'),
                     ),
                   ),

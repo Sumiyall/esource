@@ -1,7 +1,15 @@
+// plugins {
+//     id "com.android.application"
+//     id "kotlin-android"
+//     id 'com.google.gms.google-services' version '4.3.15' apply false
+//     id "dev.flutter.flutter-gradle-plugin"
+// }
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services' // Remove the version and apply false here
 }
 
 def localProperties = new Properties()
@@ -64,4 +72,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925184093809",
+    "project_id": "esource-bed3f",
+    "storage_bucket": "esource-bed3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925184093809:android:e4648a74bb8b45561035d0",
+        "android_client_info": {
+          "package_name": "com.example.esource"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuAvFnpuWHXt73hjSga0cxxnXiPyzY5vo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

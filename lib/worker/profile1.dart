@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage1 extends StatefulWidget {
-  const ProfilePage1({super.key});
+  final String userEmail;
+
+  const ProfilePage1({Key? key, required this.userEmail}) : super(key: key);
+
 
   @override
   State<ProfilePage1> createState() => _ProfilePage1State();
@@ -10,7 +13,77 @@ class ProfilePage1 extends StatefulWidget {
 class _ProfilePage1State extends State<ProfilePage1> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("profile tses ajiltan "));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Профайл',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            const CircleAvatar(
+              radius: 80,
+              backgroundImage: AssetImage('assets/images/image.png'),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              widget.userEmail,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Software Engineer',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+            ListTile(
+              leading: const Icon(Icons.email),
+              title: const Text('Email'),
+              subtitle: const Text('johndoe@example.com'),
+              onTap: () {
+                // Handle email tap
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone),
+              title: const Text('Phone'),
+              subtitle: const Text('+1 123-456-7890'),
+              onTap: () {
+                // Handle phone tap
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.location_on),
+              title: const Text('Location'),
+              subtitle: const Text('San Francisco, CA'),
+              onTap: () {
+                // Handle location tap
+              },
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                // Handle edit profile button tap
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                'Edit Profile',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

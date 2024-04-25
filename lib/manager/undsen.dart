@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'profile.dart';
 
 class UndsenPage extends StatelessWidget {
-  const UndsenPage({Key? key}) : super(key: key);
+  final String userEmail;
+
+  UndsenPage({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +14,15 @@ class UndsenPage extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text('Сайн уу',
-              style: TextStyle(
-                fontFamily: 'Mogul3',
-                fontSize: 28
-              ),),
+            Text(
+              'Сайн уу',
+              style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+            ),
             Text(
               'Менежер',
               style: TextStyle(
                 fontSize: 12,
-                color: Color.fromARGB(200, 113, 125, 151)
+                color: Color.fromARGB(200, 113, 125, 151),
               ),
             ),
           ],
@@ -44,7 +45,7 @@ class UndsenPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(builder: (context) => ProfilePage(userEmail: userEmail)),
                       );
                     },
                     child: Padding(
@@ -52,20 +53,21 @@ class UndsenPage extends StatelessWidget {
                       child: Row(
                         children: [
                           const CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/image.png'),
+                            backgroundImage:
+                                AssetImage('assets/images/image.png'),
                             radius: 27,
                           ),
                           const SizedBox(width: 16.0),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text(
-                                  'Sumyia Battss',
+                                  userEmail,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18
+                                    fontSize: 18,
                                   ),
                                 ),
                                 Text(
@@ -85,7 +87,6 @@ class UndsenPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const Divider(
                     color: Colors.white,
                     height: 7,
@@ -93,7 +94,6 @@ class UndsenPage extends StatelessWidget {
                     indent: 20,
                     endIndent: 20,
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -102,24 +102,25 @@ class UndsenPage extends StatelessWidget {
                           // Handle button press
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CalendarPage()),
+                            MaterialPageRoute(
+                                builder: (context) => CalendarPage()),
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0), 
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
                             children: const [
                               Icon(
                                 Icons.calendar_today,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9), // Add some space between the icon and text
+                              SizedBox(
+                                  width:
+                                      9), // Add some space between the icon and text
                               Text(
                                 'Хуваарь харах',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16
-                                ),
+                                    color: Colors.white, fontSize: 16),
                               ),
                             ],
                           ),
@@ -134,20 +135,21 @@ class UndsenPage extends StatelessWidget {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0), // Adjust the padding as needed
+                          padding: const EdgeInsets.all(
+                              12.0), // Adjust the padding as needed
                           child: Row(
                             children: const [
                               Icon(
                                 Icons.timer_outlined,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9), // Add some space between the icon and text
+                              SizedBox(
+                                  width:
+                                      9), // Add some space between the icon and text
                               Text(
                                 '11:00 - 12:00 AM',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15
-                                ),
+                                    color: Colors.white, fontSize: 15),
                               ),
                             ],
                           ),
@@ -155,8 +157,6 @@ class UndsenPage extends StatelessWidget {
                       ),
                     ],
                   ),
-
-
                 ],
               ),
             ),
@@ -171,7 +171,7 @@ class UndsenPage extends StatelessWidget {
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
-                physics:ScrollPhysics(),
+                physics: ScrollPhysics(),
                 itemCount: 6, // Replace with the actual number of items
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
@@ -185,7 +185,8 @@ class UndsenPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
-                                image: NetworkImage('https://hips.hearstapps.com/hmg-prod/images/gh-113021-ghi-best-fridges-1638385441.png?crop=0.486xw:0.746xh;0.0385xw,0.160xh&resize=640:*'),
+                                image: NetworkImage(
+                                    'https://hips.hearstapps.com/hmg-prod/images/gh-113021-ghi-best-fridges-1638385441.png?crop=0.486xw:0.746xh;0.0385xw,0.160xh&resize=640:*'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -250,4 +251,4 @@ class CallPage extends StatelessWidget {
       ),
     );
   }
-}
+} 

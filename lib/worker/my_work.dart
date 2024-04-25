@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/task_provider.dart';
+import 'package:esource/manager/work/home_appliance/home_task_list.dart';
 
 class MyWorkPage extends StatelessWidget {
   const MyWorkPage({Key? key}) : super(key: key);
@@ -155,21 +156,21 @@ class MyWorkPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildCategoryCard('assets/images/addWork/ger1.png', 'Гэр ахуй'),
-                  _buildCategoryCard('assets/images/addWork/tech.png', 'Технологи'),
+                  _buildCategoryCard(context, 'assets/images/addWork/ger1.png', 'Гэр ахуй'),
+                  _buildCategoryCard(context, 'assets/images/addWork/tech.png', 'Технологи'),
                 ],
               ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildCategoryCard('assets/images/addWork/gadna.png', 'Гадна талбай'),
-                  _buildCategoryCard('assets/images/addWork/ger1.png', 'Технологи'),
+                  _buildCategoryCard(context, 'assets/images/addWork/gadna.png', 'Гадна талбай'),
+                  _buildCategoryCard(context, 'assets/images/addWork/ger1.png', 'Технологи'),
                 ],
               ),
               const SizedBox(height: 24),
               const Text(
-                'Ажлын хүсэлтүүд',
+                'Ажлын жагсаалт',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -219,10 +220,25 @@ class MyWorkPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryCard(String imagePath, String title) {
+  Widget _buildCategoryCard(BuildContext context, String imagePath, String title) {
     return GestureDetector(
       onTap: () {
-        // Handle category card tap
+        if (title == 'Гэр ахуй') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+          );
+        } else if (title == 'Технологи') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+          );
+        } else if (title == 'Гадна талбай') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+          );
+        }
       },
       child: Column(
         children: [

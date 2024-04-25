@@ -1,14 +1,14 @@
 import 'package:esource/worker/repair_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/task_provider.dart';
 import 'repair_details.dart';
 import '../provider/repair_details_provider.dart';
 
-
 class UndsenPage1 extends StatelessWidget {
-  const UndsenPage1({Key? key}) : super(key: key);
+  final String userEmail;
+
+  UndsenPage1({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class UndsenPage1 extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               'Сайн уу',
               style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
@@ -31,7 +31,8 @@ class UndsenPage1 extends StatelessWidget {
                 fontSize: 12,
                 color: Color.fromARGB(200, 113, 125, 151),
               ),
-            ),          ],
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -59,13 +60,13 @@ class UndsenPage1 extends StatelessWidget {
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
-                                'Sumyia Battss',
+                                userEmail,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18
+                                  fontSize: 18,
                                 ),
                               ),
                               Text(
@@ -99,7 +100,6 @@ class UndsenPage1 extends StatelessWidget {
                     indent: 20,
                     endIndent: 20,
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -111,19 +111,19 @@ class UndsenPage1 extends StatelessWidget {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0), 
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
                             children: const [
                               Icon(
                                 Icons.calendar_today,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9), // Add some space between the icon and text
+                              SizedBox(width: 9),
                               Text(
                                 'Хуваарь харах',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
@@ -132,26 +132,25 @@ class UndsenPage1 extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Handle button press
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CallPage()),
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0), 
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
                             children: const [
                               Icon(
                                 Icons.timer_outlined,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9), 
+                              SizedBox(width: 9),
                               Text(
                                 '11:00 - 12:00 AM',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15
+                                  fontSize: 15,
                                 ),
                               ),
                             ],
@@ -160,8 +159,6 @@ class UndsenPage1 extends StatelessWidget {
                       ),
                     ],
                   ),
-
-
                 ],
               ),
             ),
@@ -189,7 +186,6 @@ class UndsenPage1 extends StatelessWidget {
                         ),
                       );
                       if (result != null) {
-                        // Update the task with the modified data
                         Provider.of<TaskProvider>(context, listen: false).updateTask(index, result);
                       }
                     },

@@ -1,13 +1,16 @@
+// appliance_req_table.dart
 import 'package:flutter/material.dart';
 
 class ApplianceReqTable extends StatefulWidget {
   final String selectedDuration;
   final Function(String?) onDurationChanged;
+  final List<Map<String, dynamic>> acceptedRequests;
 
   const ApplianceReqTable({
     Key? key,
     required this.selectedDuration,
     required this.onDurationChanged,
+    required this.acceptedRequests,
   }) : super(key: key);
 
   @override
@@ -15,20 +18,6 @@ class ApplianceReqTable extends StatefulWidget {
 }
 
 class _ApplianceReqTableState extends State<ApplianceReqTable> {
-  List<Map<String, dynamic>> _getApplianceRequests() {
-   
-    if (widget.selectedDuration == 'Сүүлийн 7 хоног') {
-      return [
-        {'name': 'Sumiya Batsuuri', 'huselt': 2, 'batalga': 32},
-        {'name': 'Garid Gots', 'huselt': 0, 'batalga': 41},
-        {'name': 'Batts Dulguun', 'huselt': 2, 'batalga': 12},
-      ];
-    } else {
-      // Placeholder data for other durations
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +61,7 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                     child: Text(
                       'Нэр',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, 
+                        fontWeight: FontWeight.bold,
                         fontFamily: 'Mogul3',
                         color: Color.fromARGB(255, 92, 111, 136),
                       ),
@@ -83,9 +72,9 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Хүсэлт',
+                      'Тоо ширхэг',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, 
+                        fontWeight: FontWeight.bold,
                         fontFamily: 'Mogul3',
                         color: Color.fromARGB(255, 92, 111, 136),
                       ),
@@ -96,9 +85,9 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Баталгаажсан',
+                      'Код',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, 
+                        fontWeight: FontWeight.bold,
                         fontFamily: 'Mogul3',
                         color: Color.fromARGB(255, 92, 111, 136),
                       ),
@@ -107,30 +96,59 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                 ),
               ],
             ),
-            ..._getApplianceRequests().map((request) {
-              return TableRow(
-                children: [
-                  TableCell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(request['name']),
+            ...(widget.acceptedRequests.isNotEmpty
+                ? [
+                    TableRow(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                      ),
+                      children: [
+                        const TableCell(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Баталгаажсан хүсэлтүүд',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Mogul3',
+                              ),
+                            ),
+                          ),
+                        ),
+                        const TableCell(
+                          child: SizedBox.shrink(),
+                        ),
+                        const TableCell(
+                          child: SizedBox.shrink(),
+                        ),
+                      ],
                     ),
-                  ),
-                  TableCell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(request['huselt'].toString()),
-                    ),
-                  ),
-                  TableCell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(request['batalga'].toString()),
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
+                    ...widget.acceptedRequests.map((request) {
+                      return TableRow(
+                        children: [
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(request['name']),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(request['quantity'].toString()),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(request['code']),
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ]
+                : []),
           ],
         ),
       ],

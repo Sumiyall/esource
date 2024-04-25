@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final String userEmail;
+
+  const ProfilePage({Key? key, required this.userEmail}) : super(key: key);
+
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -27,9 +30,9 @@ class _ProfilePageState extends State<ProfilePage> {
               backgroundImage: AssetImage('assets/images/image.png'),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'John Doe',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              widget.userEmail,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
