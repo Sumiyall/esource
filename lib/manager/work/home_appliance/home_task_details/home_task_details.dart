@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -46,7 +45,8 @@ class _HomeTaskDetailsPageState extends State<HomeTaskDetailsPage> {
     _brandController = TextEditingController(text: widget.task['brand']);
     _modelController = TextEditingController(text: widget.task['model']);
     _numberController = TextEditingController(text: widget.task['number']);
-    _descriptionController = TextEditingController(text: widget.task['description']);
+    _descriptionController =
+        TextEditingController(text: widget.task['description']);
     _categoryController = TextEditingController(text: widget.task['category']);
     _dateController = TextEditingController(text: widget.task['date']);
     _loadWorkerOptions();
@@ -127,37 +127,37 @@ class _HomeTaskDetailsPageState extends State<HomeTaskDetailsPage> {
                 ElevatedButton(
                   onPressed: _saveTask,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
                   ),
                   child: Text(
                     'Хадгалах',
                     style: TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-
                 ElevatedButton(
                   onPressed: _deleteTask,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red, 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
                   ),
                   child: Text(
                     'Устгах',
                     style: TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -187,23 +187,23 @@ class _HomeTaskDetailsPageState extends State<HomeTaskDetailsPage> {
   }
 
   void _saveTask() {
-  final updatedTask = {
-    'name': _nameController.text,
-    'phone': _phoneController.text,
-    'address': _addressController.text,
-    'type': _typeController.text,
-    'brand': _brandController.text,
-    'model': _modelController.text,
-    'number': _numberController.text,
-    'description': _descriptionController.text,
-    'category': _categoryController.text,
-    'date': _dateController.text,
-    'assignedWorker': _selectedWorker,
-  };
-  
-  widget.onSave(updatedTask);
-  Navigator.pop(context);
-}
+    final updatedTask = {
+      'name': _nameController.text,
+      'phone': _phoneController.text,
+      'address': _addressController.text,
+      'type': _typeController.text,
+      'brand': _brandController.text,
+      'model': _modelController.text,
+      'number': _numberController.text,
+      'description': _descriptionController.text,
+      'category': _categoryController.text,
+      'date': _dateController.text,
+      'assignedWorker': _selectedWorker,
+    };
+
+    widget.onSave(updatedTask);
+    Navigator.pop(context);
+  }
 
   void _deleteTask() {
     widget.onDelete();

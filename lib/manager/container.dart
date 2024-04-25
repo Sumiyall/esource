@@ -47,23 +47,25 @@ class _ContainerPageState extends State<ContainerPage> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 72, 148, 254),
+                      backgroundColor: Color.fromARGB(255, 72, 148, 254),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                     ).copyWith(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white)
-                    ),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white)),
                     icon: const Icon(Icons.add_box_outlined),
                     label: const Text(
                       '    Хүсэлт     ',
-                      style: TextStyle(fontSize: 16, color: Colors.white, fontFamily: 'Mogul3'),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontFamily: 'Mogul3'),
                     ),
                   ),
-                  
                   const SizedBox(width: 18),
-        
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
@@ -71,7 +73,8 @@ class _ContainerPageState extends State<ContainerPage> {
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(118, 123, 173, 243).withOpacity(0.1),
+                            color: Color.fromARGB(118, 123, 173, 243)
+                                .withOpacity(0.1),
                             spreadRadius: 8,
                             blurRadius: 8,
                             offset: const Offset(0, 2),
@@ -87,14 +90,17 @@ class _ContainerPageState extends State<ContainerPage> {
                             color: Colors.grey[400],
                           ),
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromARGB(255, 72, 148, 254), width: 0.7),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 72, 148, 254),
+                                width: 0.7),
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         onChanged: (value) {
-                          // handle hiih 
+                          // handle hiih
                         },
                       ),
                     ),
@@ -110,4 +116,3 @@ class _ContainerPageState extends State<ContainerPage> {
     );
   }
 }
-

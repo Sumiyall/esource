@@ -42,7 +42,7 @@ class _ChoserState extends State<Choser> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 28, 100, 225),
+                backgroundColor: Color.fromARGB(255, 28, 100, 225),
                 minimumSize: const Size(double.infinity, 58),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -66,7 +66,7 @@ class _ChoserState extends State<Choser> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 28, 100, 225),
+                backgroundColor: Color.fromARGB(255, 28, 100, 225),
                 minimumSize: const Size(double.infinity, 58),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -82,11 +82,9 @@ class _ChoserState extends State<Choser> {
               ),
             ),
             const SizedBox(height: 16),
-            
           ],
         ),
       ),
     );
   }
 }
-

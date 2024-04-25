@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text,
       );
       // User is signed in
-       Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => HomePage(userEmail: _emailController.text),
@@ -61,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
       ));
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +127,9 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage(userEmail: _emailController.text)),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            HomePage(userEmail: _emailController.text)),
                   );
                 },
                 child: Text(
@@ -140,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: userLogin,
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 28, 100, 225),
+                  backgroundColor: Color.fromARGB(255, 28, 100, 225),
                   minimumSize: const Size(double.infinity, 58),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -226,4 +229,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-} 
+}

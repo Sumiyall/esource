@@ -45,7 +45,8 @@ class _TechTaskDetailsPageState extends State<TechTaskDetailsPage> {
     _brandController = TextEditingController(text: widget.task['brand']);
     _modelController = TextEditingController(text: widget.task['model']);
     _numberController = TextEditingController(text: widget.task['number']);
-    _descriptionController = TextEditingController(text: widget.task['description']);
+    _descriptionController =
+        TextEditingController(text: widget.task['description']);
     _categoryController = TextEditingController(text: widget.task['category']);
     _dateController = TextEditingController(text: widget.task['date']);
     _loadWorkerOptions();
@@ -84,7 +85,7 @@ class _TechTaskDetailsPageState extends State<TechTaskDetailsPage> {
         ),
         automaticallyImplyLeading: true,
       ),
-     body: SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,37 +127,37 @@ class _TechTaskDetailsPageState extends State<TechTaskDetailsPage> {
                 ElevatedButton(
                   onPressed: _saveTask,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
                   ),
                   child: Text(
                     'Хадгалах',
                     style: TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-
                 ElevatedButton(
                   onPressed: _deleteTask,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red, 
-                    onPrimary: Colors.white, 
-                    shape: RoundedRectangleBorder( 
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0), 
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
                   ),
                   child: Text(
                     'Устгах',
                     style: TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

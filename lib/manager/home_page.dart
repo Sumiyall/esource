@@ -3,13 +3,9 @@ import 'add_work.dart';
 import '../manager/container.dart';
 import 'profile.dart';
 import 'undsen.dart';
-import 'profile.dart';
-// import 'work/home_appliance/add_home_work1.dart';
-
 
 class HomePage extends StatefulWidget {
   final String userEmail;
-
   const HomePage({Key? key, required this.userEmail}) : super(key: key);
 
   @override
@@ -23,12 +19,17 @@ class _HomePageState extends State<HomePage> {
         UndsenPage(userEmail: widget.userEmail),
         AddWorkPage(),
         ContainerPage(),
-        ProfilePage(userEmail: widget.userEmail),
+        ProfilePage(userId: _getUserIdFromEmail(widget.userEmail)),
       ];
-    // const UndsenPage1(),
-    // const MyWorkPage(),
-    // const ContainerPage(),
-    // const ProfilePage1(),
+
+  int _getUserIdFromEmail(String email) {
+    // Implement your logic to retrieve the user ID based on the email
+    // For example, you can query the Firebase Realtime Database to get the user ID
+    // Return the user ID as an integer
+    // Placeholder implementation:
+    return 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

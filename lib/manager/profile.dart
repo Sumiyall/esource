@@ -1,16 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String userEmail;
+  final int userId;
 
-  const ProfilePage({Key? key, required this.userEmail}) : super(key: key);
-
+  const ProfilePage({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String _userName = '';
+  String _userPhone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData(widget.userId);
+  }
+
+  Future<void> _fetchUserData(int userId) async {
+    final databaseRef = FirebaseDatabase.instance.reference();
+    final userRef =
+        databaseRef.child('users').orderByChild('id').equalTo(userId);
+
+    final snapshot = await userRef.once();
+    if (snapshot.snapshot.value != null) {
+      print('orloo1');
+      final userData =
+          (snapshot.snapshot.value as Map<dynamic, dynamic>).values.first;
+      setState(() {
+        _userName = userData['name'] ?? '';
+        _userPhone = userData['phoneNo']?.toString() ?? '';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
             Text(
-              widget.userEmail,
+              _userName,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -51,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ListTile(
               leading: const Icon(Icons.phone),
               title: const Text('Phone'),
-              subtitle: const Text('+1 123-456-7890'),
+              subtitle: Text(_userPhone),
               onTap: () {
                 // Handle phone tap
               },
@@ -71,7 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

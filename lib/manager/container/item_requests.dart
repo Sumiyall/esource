@@ -35,32 +35,37 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
                 return ListTile(
                   leading: Image.asset(item['imagePath']),
                   title: Text(item['name']),
-                  subtitle: Text('Code: ${item['code']}, Quantity: ${item['quantity']}, Price: ${item['price']}'),
+                  subtitle: Text(
+                      'Code: ${item['code']}, Quantity: ${item['quantity']}, Price: ${item['price']}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
-                        onPressed: () => acceptItemRequest(item, itemRequestProvider),
+                        onPressed: () =>
+                            acceptItemRequest(item, itemRequestProvider),
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF4894FE),
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF4894FE),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 24.0),
                         ),
                         child: const Text('Тийм'),
                       ),
                       const SizedBox(width: 8),
                       ElevatedButton(
-                        onPressed: () => rejectItemRequest(item, itemRequestProvider),
+                        onPressed: () =>
+                            rejectItemRequest(item, itemRequestProvider),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 255, 35, 35),
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 255, 35, 35),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 24.0),
                         ),
                         child: const Text('Үгүй'),
                       ),
@@ -73,9 +78,11 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
     );
   }
 
-  Future<void> acceptItemRequest(Map<String, dynamic> item, ItemRequestProvider itemRequestProvider) async {
+  Future<void> acceptItemRequest(Map<String, dynamic> item,
+      ItemRequestProvider itemRequestProvider) async {
     try {
-      final tableDataProvider = Provider.of<TableDataProvider>(context, listen: false);
+      final tableDataProvider =
+          Provider.of<TableDataProvider>(context, listen: false);
       tableDataProvider.addItemToTableData(item);
 
       itemRequestProvider.removeRequest(item);
@@ -89,7 +96,8 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
       acceptedRequests.add(acceptedRequest);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Хүсэлтийг зөвшөөрөн агуулах хэсэгт нэмэгдлээ')),
+        const SnackBar(
+            content: Text('Хүсэлтийг зөвшөөрөн агуулах хэсэгт нэмэгдлээ')),
       );
     } catch (error) {
       print('Алдаа гарлаа: $error');
@@ -99,7 +107,8 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
     }
   }
 
-  void rejectItemRequest(Map<String, dynamic> item, ItemRequestProvider itemRequestProvider) {
+  void rejectItemRequest(
+      Map<String, dynamic> item, ItemRequestProvider itemRequestProvider) {
     itemRequestProvider.removeRequest(item);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Хүсэлт цуцлагдлаа')),

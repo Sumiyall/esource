@@ -42,12 +42,12 @@ class UndsenPage extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfilePage(userEmail: userEmail)),
-                      );
-                    },
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => ProfilePage(userEmail: userEmail)),
+                    //   );
+                    // },
                     child: Padding(
                       padding: const EdgeInsets.all(19.0),
                       child: Row(
@@ -251,4 +251,4 @@ class CallPage extends StatelessWidget {
       ),
     );
   }
-} 
+}
