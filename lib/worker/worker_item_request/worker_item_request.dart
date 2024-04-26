@@ -42,7 +42,11 @@ class _WorkerItemRequestPageState extends State<WorkerItemRequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Worker Item Requests'),
+        title: const Text(
+          'Барааны хүсэлт гаргах',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: true,
       ),
       body: Column(
         children: [
@@ -97,7 +101,7 @@ class _WorkerItemRequestPageState extends State<WorkerItemRequestPage> {
             child: TextField(
               controller: _descriptionController,
               decoration: const InputDecoration(
-                labelText: 'Description',
+                labelText: 'Тайлбар',
               ),
             ),
           ),
@@ -109,7 +113,16 @@ class _WorkerItemRequestPageState extends State<WorkerItemRequestPage> {
                 final description = _descriptionController.text.trim();
                 _submitRequest(description, context);
               },
-              child: const Text('Submit'),
+              style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF4894FE),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 34.0),
+                        ),
+              child: const Text('Илгээх', ),
             ),
           ),
         ],

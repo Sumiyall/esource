@@ -2,79 +2,79 @@
     {
       "name": "LED гэрэл",
       "code": "#00001",
-      "quantity": 216,
+      "quantity": 26,
       "price": 5000,
       "imagePath": "assets/images/light.jpg"
     },
     {
-      "name": "Цахилгуураг",
+      "name": "3-тай залгуур",
       "code": "#00034",
       "quantity": 42,
       "price": 12000,
       "imagePath": "assets/images/socket.png"
     },
     {
-      "name": "LED гэрэл",
-      "code": "#00001",
-      "quantity": 216,
-      "price": 5000,
-      "imagePath": "assets/images/light.jpg"
+      "name": "Баттерей",
+      "code": "#000276",
+      "quantity": 16,
+      "price": 12000,
+      "imagePath": "assets/images/battery_12.png"
     },
     {
-      "name": "Цахилгуураг",
-      "code": "#00034",
+      "name": "Гал Хамгаалагч",
+      "code": "#07554",
       "quantity": 42,
-      "price": 12000,
+      "price": 1000,
+      "imagePath": "assets/images/fuses.jpg"
+    },
+    {
+      "name": "Таслагч ",
+      "code": "#05671",
+      "quantity": 26,
+      "price": 8000,
+      "imagePath": "assets/images/circuit_breaker.png"
+    },
+    {
+      "name": "Чийдэн оролт",
+      "code": "#00202",
+      "quantity": 8,
+      "price": 6000,
+      "imagePath": "assets/images/light_socket.jpg"
+    },
+    {
+      "name": "2-той залгуур",
+      "code": "#00021",
+      "quantity": 7,
+      "price": 8000,
       "imagePath": "assets/images/socket.png"
     },
     {
-      "name": "LED гэрэл",
-      "code": "#00001",
-      "quantity": 216,
-      "price": 5000,
-      "imagePath": "assets/images/light.jpg"
+      "name": "Уртасгагч",
+      "code": "#02034",
+      "quantity": 42,
+      "price": 12000,
+      "imagePath": "assets/images/entension.jpg"
     },
     {
-      "name": "Item 2",
-      "code": "#00002",
+      "name": "Унтраалга",
+      "code": "#00651",
+      "quantity": 16,
+      "price": 5000,
+      "imagePath": "assets/images/light_switch.png"
+    },
+    {
+      "name": "USB Залгуур",
+      "code": "#00872",
       "quantity": 5,
       "price": 2000,
-      "imagePath": "assets/images/light.jpg"
+      "imagePath": "assets/images/usb_outlet.png"
     },
     {
-      "name": "LED гэрэл",
-      "code": "#00001",
-      "quantity": 216,
-      "price": 5000,
-      "imagePath": "assets/images/light.jpg"
-    },
-    {
-      "name": "Цахилгуураг",
-      "code": "#00034",
+      "name": "Мэдрэгч",
+      "code": "#02034",
       "quantity": 42,
       "price": 12000,
-      "imagePath": "assets/images/socket.png"
-    },
-    {
-      "name": "LED гэрэл",
-      "code": "#00001",
-      "quantity": 216,
-      "price": 5000,
-      "imagePath": "assets/images/light.jpg"
-    },
-    {
-      "name": "Item 2",
-      "code": "#00002",
-      "quantity": 5,
-      "price": 2000,
-      "imagePath": "assets/images/light.jpg"
-    },
-    {
-      "name": "Цахилгуураг",
-      "code": "#00034",
-      "quantity": 42,
-      "price": 12000,
-      "imagePath": "assets/images/socket.png"
+      "imagePath": "assets/images/motion_sensor.png"
     }
     
   ]
