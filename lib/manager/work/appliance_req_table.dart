@@ -1,21 +1,23 @@
-// appliance_req_table.dart
 import 'package:flutter/material.dart';
 
 class ApplianceReqTable extends StatefulWidget {
   final String selectedDuration;
   final Function(String?) onDurationChanged;
   final List<Map<String, dynamic>> acceptedRequests;
+  final List<Map<String, dynamic>> itemRequests; // Add this line
 
   const ApplianceReqTable({
     Key? key,
     required this.selectedDuration,
     required this.onDurationChanged,
     required this.acceptedRequests,
+    required this.itemRequests, // Add this line
   }) : super(key: key);
 
   @override
   _ApplianceReqTableState createState() => _ApplianceReqTableState();
 }
+
 
 class _ApplianceReqTableState extends State<ApplianceReqTable> {
   @override
@@ -149,6 +151,30 @@ class _ApplianceReqTableState extends State<ApplianceReqTable> {
                     }).toList(),
                   ]
                 : []),
+            ...widget.itemRequests.map((request) {
+              return TableRow(
+                children: [
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(request['name']),
+                    ),
+                  ),
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(request['quantity'].toString()),
+                    ),
+                  ),
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(request['code']),
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
           ],
         ),
       ],

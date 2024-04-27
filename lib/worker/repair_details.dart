@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/table_provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class RepairDetailsPage extends StatefulWidget {
   final Map<String, dynamic> task;
@@ -25,6 +26,28 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   void initState() {
     super.initState();
     _selectedItem = widget.task['name'] ?? '';
+    _fetchTaskDetails();
+  }
+
+  Future<void> _fetchTaskDetails() async {
+    final taskId = widget.task['id'];
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference taskRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
+
+    taskRef.onValue.listen((event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        final taskData = Map<String, dynamic>.from(dataSnapshot.value as Map<dynamic, dynamic>);
+        setState(() {
+          _selectedHours = taskData['selectedHours'] ?? 0;
+          status = taskData['status'] ?? 'In Progress';
+          selectedMaterials = Map<String, int>.from(taskData['selectedMaterials'] ?? {});
+          _totalPrice = taskData['totalPrice'] ?? 0.0;
+        });
+      }
+    });
   }
 
   void _calculateTotalPrice() {
@@ -44,6 +67,21 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
     // Calculate the total price by adding the material price and labor cost
     setState(() {
       _totalPrice = totalMaterialPrice + laborCost;
+    });
+  }
+
+  Future<void> _updateTaskDetails() async {
+    final taskId = widget.task['id'];
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference taskRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
+
+    await taskRef.update({
+      'selectedHours': _selectedHours,
+      'status': status,
+      'selectedMaterials': selectedMaterials,
+      'totalPrice': _totalPrice,
     });
   }
 
@@ -178,6 +216,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
               ElevatedButton(
                 onPressed: () {
                   _calculateTotalPrice();
+                  _updateTaskDetails();
                   // Show the total price in a dialog
                   showDialog(
                     context: context,
@@ -196,8 +235,6 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                       );
                     },
                   );
-                  // Save the selected item, materials, quantities, selected hours, status, and total price
-                  // You can perform the necessary logic here
                 },
                 child: Text('Update'),
               ),

@@ -1,28 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../provider/task_provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:esource/manager/work/home_appliance/home_task_list.dart';
+import 'package:provider/provider.dart';
+import '../provider/job_request_provider.dart'; 
 
-class MyWorkPage extends StatelessWidget {
+class MyWorkPage extends StatefulWidget {
   const MyWorkPage({Key? key}) : super(key: key);
+
+  @override
+  _MyWorkPageState createState() => _MyWorkPageState();
+}
+
+class _MyWorkPageState extends State<MyWorkPage> {
+  List<Map<String, dynamic>> _tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTasks();
+  }
+
+  Future<void> _fetchTasks() async {
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference tasksRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
+
+    tasksRef.onValue.listen((event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        final tasksMap = Map<String, dynamic>.from(
+            dataSnapshot.value as Map<dynamic, dynamic>);
+        final fetchedTasks = tasksMap.entries.map((entry) {
+          final taskId = entry.key;
+          final taskData =
+              Map<String, dynamic>.from(entry.value as Map<dynamic, dynamic>);
+          taskData['id'] = taskId;
+          return taskData;
+        }).toList();
+
+        setState(() {
+          _tasks = fetchedTasks;
+        });
+      }
+    });
+  }
 
   void _showWorkDetails(BuildContext context, Map<String, dynamic> task) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(task['name']!),
+          title: Text(task['name'] ?? ''),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 12),
                 Text(
-                  'Утасны дугаар: ${task['phone']}',
+                  'Утасны дугаар: ${task['phone'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  'Гэрийн хаяг: ${task['address']}',
+                  'Гэрийн хаяг: ${task['address'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 24),
@@ -35,19 +75,19 @@ class MyWorkPage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  'Төрөл: ${task['type']}',
+                  'Төрөл: ${task['type'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  'Бренд: ${task['brand']}',
+                  'Бренд: ${task['brand'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  'Загвар: ${task['model']}',
+                  'Загвар: ${task['model'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  'Дугаар: ${task['number']}',
+                  'Дугаар: ${task['number'] ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 24),
@@ -60,7 +100,7 @@ class MyWorkPage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  task['description']!,
+                  task['description'] ?? '',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 24),
@@ -73,7 +113,7 @@ class MyWorkPage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  task['category']!,
+                  task['category'] ?? '',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -107,11 +147,17 @@ class MyWorkPage extends StatelessWidget {
                           child: Text('Үгүй'),
                         ),
                         TextButton(
-                          onPressed: () {
-                            // Perform the job request logic here
-                            Navigator.pop(context);
-                          },
-                          child: Text('Тийм'),
+          onPressed: () {
+            // Perform the job request logic here
+            final jobRequest = {
+              'name': task['name'],
+              'huselt': 1,
+              'batalga': 0,
+            };
+            Provider.of<JobRequestProvider>(context, listen: false).addJobRequest(jobRequest);
+            Navigator.pop(context);
+          },
+          child: Text('Тийм'),
                         ),
                       ],
                     );
@@ -128,9 +174,6 @@ class MyWorkPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskProvider = Provider.of<TaskProvider>(context);
-    final tasks = taskProvider.tasks;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -180,9 +223,9 @@ class MyWorkPage extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: tasks.length,
+                itemCount: _tasks.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final task = tasks[index];
+                  final task = _tasks[index];
                   return GestureDetector(
                     onTap: () {
                       _showWorkDetails(context, task);
@@ -194,7 +237,7 @@ class MyWorkPage extends StatelessWidget {
                       ),
                       child: ListTile(
                         title: Text(
-                          task['name']!,
+                          task['name'] ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -203,7 +246,7 @@ class MyWorkPage extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
-                          task['description']!,
+                          task['description'] ?? '',
                           style: TextStyle(fontSize: 14),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,

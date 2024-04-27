@@ -1,4 +1,3 @@
-// add_work.dart
 import 'package:flutter/material.dart';
 import 'undsen.dart';
 import 'package:esource/manager/work/work_req_table.dart';
@@ -7,6 +6,9 @@ import 'work/home_appliance/add_home_work.dart';
 import 'work/tech_appliance/add_tech_work.dart';
 import 'work/outdoor_appliance/add_out_work.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:provider/provider.dart';
+import '../provider/item_request_provider.dart';
+import '../provider/job_request_provider.dart'; 
 
 class AddWorkPage extends StatefulWidget {
   final List<Map<String, dynamic>> acceptedRequests;
@@ -23,6 +25,9 @@ class _AddWorkPageState extends State<AddWorkPage> {
 
   @override
   Widget build(BuildContext context) {
+    final itemRequestProvider = Provider.of<ItemRequestProvider>(context);
+    final jobRequestProvider = Provider.of<JobRequestProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -67,6 +72,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                     _selectedDuration = newValue!;
                   });
                 },
+                workerJobRequests: jobRequestProvider.jobRequests, // Add this line
               ),
               ApplianceReqTable(
                 selectedDuration: _selectedDuration,
@@ -76,6 +82,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                   });
                 },
                 acceptedRequests: widget.acceptedRequests,
+                itemRequests: itemRequestProvider.pendingRequests, // Pass the item requests
               ),
             ],
           ),
@@ -83,7 +90,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
       ),
     );
   }
-
   Widget _buildCategoryCard(String imagePath, String title) {
     return GestureDetector(
       onTap: () {

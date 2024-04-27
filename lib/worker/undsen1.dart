@@ -1,19 +1,57 @@
 import 'package:esource/worker/repair_details.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/task_provider.dart';
-import 'repair_details.dart';
 import '../provider/repair_details_provider.dart';
 
-class UndsenPage1 extends StatelessWidget {
+class UndsenPage1 extends StatefulWidget {
   final String userEmail;
 
   UndsenPage1({Key? key, required this.userEmail}) : super(key: key);
 
   @override
+  _UndsenPage1State createState() => _UndsenPage1State();
+}
+
+class _UndsenPage1State extends State<UndsenPage1> {
+  List<Map<String, dynamic>> _tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTasks();
+  }
+
+  Future<void> _fetchTasks() async {
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference tasksRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
+
+    tasksRef.onValue.listen((event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        final tasksMap = Map<String, dynamic>.from(
+            dataSnapshot.value as Map<dynamic, dynamic>);
+        final fetchedTasks = tasksMap.entries.map((entry) {
+          final taskId = entry.key;
+          final taskData =
+              Map<String, dynamic>.from(entry.value as Map<dynamic, dynamic>);
+          taskData['id'] = taskId;
+          return taskData;
+        }).toList();
+
+        setState(() {
+          _tasks = fetchedTasks;
+        });
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final taskProvider = Provider.of<TaskProvider>(context);
-    final tasks = taskProvider.tasks;
+    final databaseReference = FirebaseDatabase.instance.reference().child('tasks');
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +100,7 @@ class UndsenPage1 extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userEmail,
+                                widget.userEmail,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -173,46 +211,37 @@ class UndsenPage1 extends StatelessWidget {
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
-                physics: ScrollPhysics(),
-                itemCount: tasks.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final task = tasks[index];
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  final task = _tasks[index];
                   return GestureDetector(
-                    onTap: () async {
-                      final result = await Navigator.push(
+                    onTap: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => RepairDetailsPage(task: task),
                         ),
                       );
-                      if (result != null) {
-                        Provider.of<TaskProvider>(context, listen: false).updateTask(index, result);
-                      }
                     },
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    task['name'] ?? '',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    task['description'] ?? '',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
+                            Text(
+                              task['name'] ?? '',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            const SizedBox(height: 8),
+                            Text(
+                              task['description'] ?? '',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            // Display other task details as needed
                           ],
                         ),
                       ),

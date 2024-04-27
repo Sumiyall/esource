@@ -4,11 +4,13 @@ import '../add_work.dart';
 class WorkRequestsTable extends StatefulWidget {
   final String selectedDuration;
   final Function(String?) onDurationChanged;
+  final List<Map<String, dynamic>> workerJobRequests; // Add this line
 
   const WorkRequestsTable({
     Key? key,
     required this.selectedDuration,
     required this.onDurationChanged,
+    required this.workerJobRequests, // Add this line
   }) : super(key: key);
 
   @override
@@ -25,7 +27,6 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
         {'name': 'Batts Dulguun', 'huselt': 2, 'batalga': 12},
       ];
     } else {
-    
       return [];
     }
   }
@@ -96,25 +97,25 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
                 ),
               ],
             ),
-            ..._getWorkRequests().map((request) {
+            ...widget.workerJobRequests.map((request) {
               return TableRow(
                 children: [
                   TableCell(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(request['name']),
+                      child: Text(request['name'] ?? ''),
                     ),
                   ),
                   TableCell(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(request['huselt'].toString()),
+                      child: Text(request['huselt']?.toString() ?? ''),
                     ),
                   ),
                   TableCell(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(request['batalga'].toString()),
+                      child: Text(request['batalga']?.toString() ?? ''),
                     ),
                   ),
                 ],
