@@ -71,19 +71,34 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   }
 
   Future<void> _updateTaskDetails() async {
-    final taskId = widget.task['id'];
-    final databaseURL =
-        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
-    DatabaseReference taskRef =
-        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
+  final taskId = widget.task['id'];
+  print('Updating task details for taskId: $taskId');
 
+  final databaseURL =
+      'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+  DatabaseReference taskRef =
+      FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
+
+  // Sanitize the keys in selectedMaterials
+  Map<String, int> sanitizedMaterials = {};
+  selectedMaterials.forEach((key, value) {
+    String sanitizedKey = key.replaceAll(RegExp(r'[/\.#$\[\]]'), '_');
+    sanitizedMaterials[sanitizedKey] = value;
+  });
+
+  try {
     await taskRef.update({
       'selectedHours': _selectedHours,
       'status': status,
-      'selectedMaterials': Map<String, dynamic>.from(selectedMaterials),
+      'selectedMaterials': sanitizedMaterials,
       'totalPrice': _totalPrice,
     });
+    print('Task details updated successfully');
+  } catch (error) {
+    print('Error updating task details: $error');
+    // Handle the error, show an error message, or perform any necessary actions
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +115,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Item: $_selectedItem',
+                'Нэр: $_selectedItem',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -108,12 +123,12 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
               ),
               SizedBox(height: 16),
               Text(
-                'Description: ${widget.task['description'] ?? ''}',
+                'Тайлбар: ${widget.task['description'] ?? ''}',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 24),
               Text(
-                'Required Materials',
+                'Ашиглагдах материал',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

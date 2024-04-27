@@ -39,7 +39,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Details'),
+        title: const Text(
+          'Ажлын явц',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -61,45 +65,40 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
               SizedBox(height: 16),
               Text(
-                'Name: ${_taskDetails['name'] ?? ''}',
+                'Нэр: ${_taskDetails['name'] ?? ''}',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
               Text(
-                'Description: ${_taskDetails['description'] ?? ''}',
+                'Тайлбар: ${_taskDetails['description'] ?? ''}',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
               Text(
-                'Category: ${_taskDetails['category'] ?? ''}',
+                'Хугацааны хүсэлт: ${_taskDetails['category'] ?? ''}',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
               Text(
-                'Status: ${_taskDetails['status'] ?? ''}',
+                'Явц: ${_taskDetails['status'] ?? ''}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               Text(
-                'Estimated Hours: ${_taskDetails['selectedHours'] ?? 0}',
+                'Тооцоолж буй хугацаа: ${_taskDetails['selectedHours'] ?? 0}',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(height: 16),
-              Text(
-                'Required Materials:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
               SizedBox(height: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: (_taskDetails['selectedMaterials'] as Map<String, dynamic>? ?? {})
-                    .entries
-                    .map((entry) => Text('${entry.key}: ${entry.value}'))
-                    .toList(),
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: (_taskDetails['selectedMaterials'] as Map<String, dynamic>? ?? {})
+              //       .entries
+              //       .map((entry) => Text('${entry.key}: ${entry.value}'))
+              //       .toList(),
+              // ),
               SizedBox(height: 16),
               Text(
-                'Total Price: ${_taskDetails['totalPrice'] ?? 0}',
+                'Нийт үнэ: ${_taskDetails['totalPrice'] ?? 0}',
                 style: TextStyle(fontSize: 18),
               ),
             ],
