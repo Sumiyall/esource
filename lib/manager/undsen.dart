@@ -1,10 +1,62 @@
+import 'package:esource/manager/task_process.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
+import 'package:flutter/material.dart';
+import 'profile.dart';
+import 'package:esource/manager/work/work_req_table.dart';
+import 'package:flutter/material.dart';
+import 'profile.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class UndsenPage extends StatelessWidget {
+
+import 'package:flutter/material.dart';
+import 'profile.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'task_process.dart';
+
+class UndsenPage extends StatefulWidget {
   final String userEmail;
 
   UndsenPage({Key? key, required this.userEmail}) : super(key: key);
+
+  @override
+  _UndsenPageState createState() => _UndsenPageState();
+}
+
+class _UndsenPageState extends State<UndsenPage> {
+  List<Map<String, dynamic>> _tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTasks();
+  }
+
+  Future<void> _fetchTasks() async {
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference tasksRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
+
+    tasksRef.onValue.listen((event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        final tasksMap = Map<String, dynamic>.from(
+            dataSnapshot.value as Map<dynamic, dynamic>);
+        final fetchedTasks = tasksMap.entries.map((entry) {
+          final taskId = entry.key;
+          final taskData =
+              Map<String, dynamic>.from(entry.value as Map<dynamic, dynamic>);
+          taskData['id'] = taskId;
+          return taskData;
+        }).toList();
+
+        setState(() {
+          _tasks = fetchedTasks;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +94,6 @@ class UndsenPage extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => ProfilePage(userEmail: userEmail)),
-                    //   );
-                    // },
                     child: Padding(
                       padding: const EdgeInsets.all(19.0),
                       child: Row(
@@ -63,7 +109,7 @@ class UndsenPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userEmail,
+                                  widget.userEmail,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -99,7 +145,6 @@ class UndsenPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Handle button press
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -114,9 +159,7 @@ class UndsenPage extends StatelessWidget {
                                 Icons.calendar_today,
                                 color: Colors.white,
                               ),
-                              SizedBox(
-                                  width:
-                                      9), // Add some space between the icon and text
+                              SizedBox(width: 9),
                               Text(
                                 'Хуваарь харах',
                                 style: TextStyle(
@@ -128,24 +171,20 @@ class UndsenPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Handle button press
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CallPage()),
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(
-                              12.0), // Adjust the padding as needed
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
                             children: const [
                               Icon(
                                 Icons.timer_outlined,
                                 color: Colors.white,
                               ),
-                              SizedBox(
-                                  width:
-                                      9), // Add some space between the icon and text
+                              SizedBox(width: 9),
                               Text(
                                 '11:00 - 12:00 AM',
                                 style: TextStyle(
@@ -171,47 +210,88 @@ class UndsenPage extends StatelessWidget {
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
-                physics: ScrollPhysics(),
-                itemCount: 6, // Replace with the actual number of items
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://hips.hearstapps.com/hmg-prod/images/gh-113021-ghi-best-fridges-1638385441.png?crop=0.486xw:0.746xh;0.0385xw,0.160xh&resize=640:*'),
-                                fit: BoxFit.cover,
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  final task = _tasks[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskDetailsPage(taskId: task['id']),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            task['imageUrl'] != null && task['imageUrl'].isNotEmpty
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                      task['imageUrl'],
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Container(
+                                    width: 80,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Icon(Icons.image, color: Colors.grey[400]),
+                                  ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    task['name'] ?? '',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    task['description'] ?? '',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[600],
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.category, size: 16, color: Colors.grey[400]),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        task['category'] ?? '',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Title $index',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Description $index',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

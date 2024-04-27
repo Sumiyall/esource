@@ -80,7 +80,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
     await taskRef.update({
       'selectedHours': _selectedHours,
       'status': status,
-      'selectedMaterials': selectedMaterials,
+      'selectedMaterials': Map<String, dynamic>.from(selectedMaterials),
       'totalPrice': _totalPrice,
     });
   }
