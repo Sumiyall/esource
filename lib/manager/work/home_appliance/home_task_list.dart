@@ -146,6 +146,23 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                     ),
                     SizedBox(height: 24),
                     Text(
+                      'Task Image',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    task['imageUrl'] != null && task['imageUrl'].isNotEmpty
+                        ? Image.network(
+                            task['imageUrl'],
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : Text('No image available'),
+                    SizedBox(height: 24),
+                    Text(
                       'Тайлбар',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -173,7 +190,7 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 12),
                     Text(
                       'Date',
                       style: TextStyle(
@@ -188,7 +205,7 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                     ),
                     SizedBox(height: 24),
                     Text(
-                      'Assigned Worker',
+                      'Ажилтан',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
