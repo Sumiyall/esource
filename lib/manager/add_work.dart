@@ -8,7 +8,7 @@ import 'work/outdoor_appliance/add_out_work.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:provider/provider.dart';
 import '../provider/item_request_provider.dart';
-import '../provider/job_request_provider.dart'; 
+import '../provider/job_request_provider.dart';
 
 class AddWorkPage extends StatefulWidget {
   final List<Map<String, dynamic>> acceptedRequests;
@@ -72,7 +72,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                     _selectedDuration = newValue!;
                   });
                 },
-                workerJobRequests: jobRequestProvider.jobRequests, // Add this line
+                workerJobRequests: jobRequestProvider.jobRequests,
               ),
               ApplianceReqTable(
                 selectedDuration: _selectedDuration,
@@ -82,7 +82,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                   });
                 },
                 acceptedRequests: widget.acceptedRequests,
-                itemRequests: itemRequestProvider.pendingRequests, // Pass the item requests
+                itemRequests: itemRequestProvider.pendingRequests,
               ),
             ],
           ),
@@ -90,6 +90,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
       ),
     );
   }
+
   Widget _buildCategoryCard(String imagePath, String title) {
     return GestureDetector(
       onTap: () {

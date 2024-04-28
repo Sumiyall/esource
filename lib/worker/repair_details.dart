@@ -14,20 +14,21 @@ class RepairDetailsPage extends StatefulWidget {
 
 class _RepairDetailsPageState extends State<RepairDetailsPage> {
   int _selectedHours = 0;
-  String status = 'In Progress';
+  String status = 'Засагдаж байна';
   Map<String, int> selectedMaterials = {};
   String _selectedItem = '';
   double _totalPrice = 0.0;
 
-  // Define the hourly rate for the repair service
-  final double hourlyRate = 50.0; // Replace with your actual hourly rate
+  
+  final double hourlyRate = 20000.0; 
 
   @override
-  void initState() {
-    super.initState();
-    _selectedItem = widget.task['name'] ?? '';
-    _fetchTaskDetails();
-  }
+void initState() {
+  super.initState();
+  _selectedItem = widget.task['name'] ?? '';
+  status = 'Засагдаж байна'; 
+  _fetchTaskDetails();
+}
 
   Future<void> _fetchTaskDetails() async {
     final taskId = widget.task['id'];
@@ -42,7 +43,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
         final taskData = Map<String, dynamic>.from(dataSnapshot.value as Map<dynamic, dynamic>);
         setState(() {
           _selectedHours = taskData['selectedHours'] ?? 0;
-          status = taskData['status'] ?? 'In Progress';
+          status = taskData['status'] ?? 'Засагдаж байна';
           selectedMaterials = Map<String, int>.from(taskData['selectedMaterials'] ?? {});
           _totalPrice = taskData['totalPrice'] ?? 0.0;
         });
@@ -61,10 +62,9 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
       totalMaterialPrice += (material['price'] ?? 0) * quantity;
     });
 
-    // Calculate the labor cost based on the selected hours and hourly rate
     double laborCost = _selectedHours * hourlyRate;
 
-    // Calculate the total price by adding the material price and labor cost
+
     setState(() {
       _totalPrice = totalMaterialPrice + laborCost;
     });
@@ -79,7 +79,6 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   DatabaseReference taskRef =
       FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
 
-  // Sanitize the keys in selectedMaterials
   Map<String, int> sanitizedMaterials = {};
   selectedMaterials.forEach((key, value) {
     String sanitizedKey = key.replaceAll(RegExp(r'[/\.#$\[\]]'), '_');
@@ -96,7 +95,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
     print('Task details updated successfully');
   } catch (error) {
     print('Error updating task details: $error');
-    // Handle the error, show an error message, or perform any necessary actions
+    
   }
 }
 
@@ -106,7 +105,11 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Repair Details'),
+        title: const Text(
+          'Засварын дэлгэрэнгүй',
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        ),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -130,7 +133,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
               Text(
                 'Ашиглагдах материал',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 18, 
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -186,7 +189,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
               }).toList(),
               SizedBox(height: 16),
               Text(
-                'Estimated Hours',
+                'Тооцоолж буй хугацаа',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -212,10 +215,10 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
               DropdownButtonFormField<String>(
                 value: status,
                 decoration: InputDecoration(
-                  labelText: 'Status',
+                  labelText: 'Үйл явц',
                   border: OutlineInputBorder(),
                 ),
-                items: ['In Progress', 'Completed'].map((String value) {
+                items: ['Засагдаж байна', 'Дууссан'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -228,6 +231,14 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                 },
               ),
               SizedBox(height: 24),
+              Text(
+                'Нийт үнэ: $_totalPrice',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   _calculateTotalPrice();
@@ -237,8 +248,8 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Total Price'),
-                        content: Text('The total price is: $_totalPrice'),
+                        title: Text('Нийт үнэ'),
+                        content: Text('Нийт үнэ нь : $_totalPrice'),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -251,16 +262,25 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     },
                   );
                 },
-                child: Text('Update'),
+                style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF4894FE),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 24.0),
+                        ),
+                child: Text('Шинэчлэх'),
               ),
               SizedBox(height: 16),
-              Text(
-                'Total Price: $_totalPrice',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // Text(
+              //   'Нийт үнэ: $_totalPrice',
+              //   style: TextStyle(
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
         ),

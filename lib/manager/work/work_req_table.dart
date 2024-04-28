@@ -4,13 +4,13 @@ import '../add_work.dart';
 class WorkRequestsTable extends StatefulWidget {
   final String selectedDuration;
   final Function(String?) onDurationChanged;
-  final List<Map<String, dynamic>> workerJobRequests; // Add this line
+  final List<Map<String, dynamic>> workerJobRequests;
 
   const WorkRequestsTable({
     Key? key,
     required this.selectedDuration,
     required this.onDurationChanged,
-    required this.workerJobRequests, // Add this line
+    required this.workerJobRequests,
   }) : super(key: key);
 
   @override
@@ -18,17 +18,34 @@ class WorkRequestsTable extends StatefulWidget {
 }
 
 class _WorkRequestsTableState extends State<WorkRequestsTable> {
-  List<Map<String, dynamic>> _getWorkRequests() {
-    // Replace this with your actual data retrieval logic based on the selected duration
-    if (widget.selectedDuration == 'Сүүлийн 7 хоног') {
-      return [
-        {'name': 'Sumiya Batsuuri', 'huselt': 2, 'batalga': 32},
-        {'name': 'Garid Gots', 'huselt': 0, 'batalga': 41},
-        {'name': 'Batts Dulguun', 'huselt': 2, 'batalga': 12},
-      ];
-    } else {
-      return [];
-    }
+  void _showConfirmationDialog(BuildContext context, Map<String, dynamic> request) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Ажлын хүсэлт'),
+          content: const Text('Хүсэлтийг зөвшөөрөх үү?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Үгүй'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  request['batalga'] = (request['batalga'] ?? 0) + (request['huselt'] ?? 0);
+                  request['huselt'] = 0;
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Тийм'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -106,10 +123,15 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
                       child: Text(request['name'] ?? ''),
                     ),
                   ),
-                  TableCell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(request['huselt']?.toString() ?? ''),
+                  GestureDetector(
+                    onTap: () {
+                      _showConfirmationDialog(context, request);
+                    },
+                    child: TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(request['huselt']?.toString() ?? ''),
+                      ),
                     ),
                   ),
                   TableCell(

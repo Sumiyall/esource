@@ -147,17 +147,17 @@ class _MyWorkPageState extends State<MyWorkPage> {
                           child: Text('Үгүй'),
                         ),
                         TextButton(
-          onPressed: () {
-            // Perform the job request logic here
-            final jobRequest = {
-              'name': task['name'],
-              'huselt': 1,
-              'batalga': 0,
-            };
-            Provider.of<JobRequestProvider>(context, listen: false).addJobRequest(jobRequest);
-            Navigator.pop(context);
-          },
-          child: Text('Тийм'),
+                          onPressed: () {
+                            // Perform the job request logic here
+                            final jobRequest = {
+                              'name': task['name'],
+                              'huselt': 1,
+                              'batalga': 0,
+                            };
+                            Provider.of<JobRequestProvider>(context, listen: false).addJobRequest(jobRequest);
+                            Navigator.pop(context);
+                          },
+                          child: Text('Тийм'),
                         ),
                       ],
                     );
