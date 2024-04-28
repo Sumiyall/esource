@@ -25,11 +25,13 @@ class UndsenPage extends StatefulWidget {
 
 class _UndsenPageState extends State<UndsenPage> {
   List<Map<String, dynamic>> _tasks = [];
+  String _userName = '';
 
   @override
   void initState() {
     super.initState();
     _fetchTasks();
+    _fetchUserName();
   }
 
   Future<void> _fetchTasks() async {
@@ -53,6 +55,22 @@ class _UndsenPageState extends State<UndsenPage> {
 
         setState(() {
           _tasks = fetchedTasks;
+        });
+      }
+    });
+  }
+
+  Future<void> _fetchUserName() async {
+    final databaseUrl = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    final databaseRef = FirebaseDatabase(databaseURL: databaseUrl).reference();
+    DatabaseReference userRef = databaseRef.child('users');
+
+    userRef.orderByChild('email').equalTo(widget.userEmail).onChildAdded.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.exists) {
+        Map<dynamic, dynamic> userData = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          _userName = userData['name'] ?? '';
         });
       }
     });
@@ -109,7 +127,7 @@ class _UndsenPageState extends State<UndsenPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.userEmail,
+                                  _userName,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -117,7 +135,7 @@ class _UndsenPageState extends State<UndsenPage> {
                                   ),
                                 ),
                                 Text(
-                                  'manager gsh',
+                                  'Менежер',
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -181,7 +199,7 @@ class _UndsenPageState extends State<UndsenPage> {
                           child: Row(
                             children: const [
                               Icon(
-                                Icons.timer_outlined,
+                                Icons.timer_sharp,
                                 color: Colors.white,
                               ),
                               SizedBox(width: 9),

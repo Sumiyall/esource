@@ -39,7 +39,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Ажлын явц',
           style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
         ),
@@ -64,47 +64,44 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                 ),
               SizedBox(height: 16),
-              Text(
-                'Нэр: ${_taskDetails['name'] ?? ''}',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Тайлбар: ${_taskDetails['description'] ?? ''}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Хугацааны хүсэлт: ${_taskDetails['category'] ?? ''}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Явц: ${_taskDetails['status'] ?? ''}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Тооцоолж буй хугацаа: ${_taskDetails['selectedHours'] ?? 0}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 8),
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: (_taskDetails['selectedMaterials'] as Map<String, dynamic>? ?? {})
-              //       .entries
-              //       .map((entry) => Text('${entry.key}: ${entry.value}'))
-              //       .toList(),
-              // ),
-              SizedBox(height: 16),
-              Text(
-                'Нийт үнэ: ${_taskDetails['totalPrice'] ?? 0}',
-                style: TextStyle(fontSize: 18),
-              ),
+              TextBlock(title: 'Нэр', content: _taskDetails['name'] ?? ''),
+              TextBlock(title: 'Тайлбар', content: _taskDetails['description'] ?? ''),
+              TextBlock(title: 'Хугацааны хүсэлт', content: _taskDetails['category'] ?? ''),
+              TextBlock(title: 'Явц', content: _taskDetails['status'] ?? ''),
+              TextBlock(title: 'Тооцоолж буй хугацаа', content: _taskDetails['selectedHours']?.toString() ?? ''),
+              TextBlock(title: 'Нийт үнэ', content: _taskDetails['totalPrice']?.toString() ?? ''),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class TextBlock extends StatelessWidget {
+  final String title;
+  final String content;
+
+  const TextBlock({Key? key, required this.title, required this.content}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 4),
+        Text(
+          title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Mogul3'),
+        ),
+        SizedBox(height: 4),
+        Text(
+          content,
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 4),
+        Divider(),
+      ],
     );
   }
 }

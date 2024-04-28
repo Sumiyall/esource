@@ -16,11 +16,13 @@ class UndsenPage1 extends StatefulWidget {
 
 class _UndsenPage1State extends State<UndsenPage1> {
   List<Map<String, dynamic>> _tasks = [];
+  String _userName = '';
 
   @override
   void initState() {
     super.initState();
     _fetchTasks();
+    _fetchUserName();
   }
 
   Future<void> _fetchTasks() async {
@@ -44,6 +46,22 @@ class _UndsenPage1State extends State<UndsenPage1> {
 
         setState(() {
           _tasks = fetchedTasks;
+        });
+      }
+    });
+  }
+
+  Future<void> _fetchUserName() async {
+    final databaseUrl = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    final databaseRef = FirebaseDatabase(databaseURL: databaseUrl).reference();
+    DatabaseReference userRef = databaseRef.child('users');
+
+    userRef.orderByChild('email').equalTo(widget.userEmail).onChildAdded.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.exists) {
+        Map<dynamic, dynamic> userData = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          _userName = userData['name'] ?? '';
         });
       }
     });
@@ -100,7 +118,7 @@ class _UndsenPage1State extends State<UndsenPage1> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.userEmail,
+                                _userName,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -108,7 +126,7 @@ class _UndsenPage1State extends State<UndsenPage1> {
                                 ),
                               ),
                               Text(
-                                'Ajiltan gsh',
+                                'Ажилтан',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),

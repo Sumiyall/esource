@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText: 'Менежерийн нэр',
+                  labelText: 'Менежерийн имэйл',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         UndsenPage(userEmail: widget.userEmail),
         AddWorkPage(),
         ContainerPage(),
-        ProfilePage(userId: _getUserIdFromEmail(widget.userEmail)),
+        ProfilePage(userEmail: widget.userEmail),
       ];
 
   int _getUserIdFromEmail(String email) {

@@ -87,7 +87,6 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
 
       itemRequestProvider.removeRequest(item);
 
-      // Add the accepted request to the acceptedRequests list
       final acceptedRequest = {
         'name': item['name'],
         'quantity': item['quantity'],

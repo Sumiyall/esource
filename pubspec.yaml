@@ -48,6 +48,8 @@ dependencies:
   cloud_firestore: ^4.15.8
   firebase_database: ^10.4.9
   firebase_storage: ^11.6.9
+  pdf: ^3.10.8
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:

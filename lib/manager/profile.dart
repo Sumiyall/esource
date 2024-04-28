@@ -1,10 +1,12 @@
+import 'package:esource/manager/login.dart';
+import 'package:esource/manager/report_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ProfilePage extends StatefulWidget {
-  final int userId;
-
-  const ProfilePage({Key? key, required this.userId}) : super(key: key);
+  final String userEmail;
+  const ProfilePage({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -12,29 +14,29 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String _userName = '';
-  String _userPhone = '';
+  String _userPhoneNumber = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchUserData(widget.userId);
+    _fetchUserName();
   }
 
-  Future<void> _fetchUserData(int userId) async {
-    final databaseRef = FirebaseDatabase.instance.reference();
-    final userRef =
-        databaseRef.child('users').orderByChild('id').equalTo(userId);
+  Future<void> _fetchUserName() async {
+    final databaseUrl = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    final databaseRef = FirebaseDatabase(databaseURL: databaseUrl).reference();
+    DatabaseReference userRef = databaseRef.child('users');
 
-    final snapshot = await userRef.once();
-    if (snapshot.snapshot.value != null) {
-      print('orloo1');
-      final userData =
-          (snapshot.snapshot.value as Map<dynamic, dynamic>).values.first;
-      setState(() {
-        _userName = userData['name'] ?? '';
-        _userPhone = userData['phoneNo']?.toString() ?? '';
-      });
-    }
+    userRef.orderByChild('email').equalTo(widget.userEmail).onChildAdded.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.exists) {
+        Map<dynamic, dynamic> userData = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          _userName = userData['name'] ?? '';
+          _userPhoneNumber = userData['phoneNo']?.toString() ?? '';
+        });
+      }
+    });
   }
 
   @override
@@ -69,42 +71,55 @@ class _ProfilePageState extends State<ProfilePage> {
             ListTile(
               leading: const Icon(Icons.email),
               title: const Text('Email'),
-              subtitle: const Text('johndoe@example.com'),
+              subtitle: Text(widget.userEmail),
               onTap: () {
                 // Handle email tap
               },
             ),
             ListTile(
               leading: const Icon(Icons.phone),
-              title: const Text('Phone'),
-              subtitle: Text(_userPhone),
+              title: const Text('Утас'),
+              subtitle: Text(_userPhoneNumber),
               onTap: () {
                 // Handle phone tap
               },
             ),
             ListTile(
-              leading: const Icon(Icons.location_on),
-              title: const Text('Location'),
-              subtitle: const Text('San Francisco, CA'),
+              leading: const Icon(Icons.note_add),
+              title: const Text('Тайлан'),
+              subtitle: const Text('Ажлын гүйцэтгэлийн тайлан үзэх'),
               onTap: () {
-                // Handle location tap
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReportPage(userEmail: widget.userEmail)),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.note_alt),
+              title: const Text('Тайлан'),
+              subtitle: const Text('Материалын тайлан үзэх'),
+              onTap: () {
               },
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () {
-                // Handle edit profile button tap
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
               child: const Text(
-                'Edit Profile',
+                'Гарах',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),

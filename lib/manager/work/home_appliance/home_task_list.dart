@@ -146,7 +146,7 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                     ),
                     SizedBox(height: 24),
                     Text(
-                      'Task Image',
+                      'Зураг',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -160,7 +160,7 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                             width: double.infinity,
                             fit: BoxFit.cover,
                           )
-                        : Text('No image available'),
+                        : Text('Зураг хоосон байна'),
                     SizedBox(height: 24),
                     Text(
                       'Тайлбар',
@@ -192,7 +192,7 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
                     ),
                     SizedBox(height: 12),
                     Text(
-                      'Date',
+                      'Хугацаа',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
