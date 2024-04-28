@@ -219,7 +219,7 @@ class _UndsenPageState extends State<UndsenPage> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Миний ажлууд',
+              'Нийт ажлууд',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
