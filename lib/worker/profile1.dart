@@ -1,3 +1,4 @@
+import 'package:esource/manager/report_page.dart';
 import 'package:esource/worker/login1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,10 @@ class _ProfilePage1State extends State<ProfilePage1> {
               title: const Text('Тайлан'),
               subtitle: const Text('Ажлын гүйцэтгэлийн тайлан үзэх'),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReportPage(userEmail: widget.userEmail)),
+                );
               },
             ),
             ListTile(
