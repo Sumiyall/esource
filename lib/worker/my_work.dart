@@ -51,6 +51,7 @@ class _MyWorkPageState extends State<MyWorkPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(task['name'] ?? ''),
           content: SingleChildScrollView(
             child: Column(
@@ -127,16 +128,15 @@ class _MyWorkPageState extends State<MyWorkPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Хаах'),
+              child: Text('Хаах', style: TextStyle(color: Color(0xFF4894FE),)),
             ),
             ElevatedButton(
               onPressed: () {
-                // Handle job request logic here
-                // You can show a dialog or navigate to a confirmation page
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
+                      backgroundColor: Colors.white,
                       title: Text('Ажил хүсэлт'),
                       content: Text('Та энэ ажлыг хүсэх үү?'),
                       actions: [
@@ -144,7 +144,7 @@ class _MyWorkPageState extends State<MyWorkPage> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('Үгүй'),
+                          child: Text('Үгүй', style: TextStyle(color: const Color.fromARGB(255, 250, 63, 63)),)
                         ),
                         TextButton(
                           onPressed: () {
@@ -158,13 +158,21 @@ class _MyWorkPageState extends State<MyWorkPage> {
                             Navigator.pop(context);
                           },
                           child: Text('Тийм'),
+                        style: ElevatedButton.styleFrom(
+                          // primary: Colors.white, // Background color
+                          onPrimary: Color(0xFF4894FE)   // Text color
+                        ),
                         ),
                       ],
                     );
                   },
                 );
               },
-              child: Text('Ажил хүсэх'),
+              style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.white, // Text color
+    backgroundColor: Color(0xFF4894FE), // Background color
+  ),
+              child: Text('Ажил хүсэх',),
             ),
           ],
         );
@@ -222,7 +230,7 @@ class _MyWorkPageState extends State<MyWorkPage> {
               const SizedBox(height: 16),
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 itemCount: _tasks.length,
                 itemBuilder: (BuildContext context, int index) {
                   final task = _tasks[index];
@@ -231,6 +239,7 @@ class _MyWorkPageState extends State<MyWorkPage> {
                       _showWorkDetails(context, task);
                     },
                     child: Card(
+                      color: Colors.white,
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

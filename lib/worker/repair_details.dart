@@ -208,6 +208,7 @@ void initState() {
                         _calculateTotalPrice();
                       });
                     },
+                    selectedColor: Color.fromARGB(255, 175, 209, 255),
                   );
                 }),
               ),
@@ -255,7 +256,7 @@ void initState() {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('OK'),
+                            child: Text('OK', style: TextStyle(color: Color(0xFF4894FE),)),
                           ),
                         ],
                       );

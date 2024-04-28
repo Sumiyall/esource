@@ -23,6 +23,7 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           title: const Text('Ажлын хүсэлт'),
           content: const Text('Хүсэлтийг зөвшөөрөх үү?'),
           actions: [
@@ -30,7 +31,7 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Үгүй'),
+              child: const Text('Үгүй', style: TextStyle(color: Color.fromARGB(223, 243, 86, 75))),
             ),
             TextButton(
               onPressed: () {
@@ -40,7 +41,7 @@ class _WorkRequestsTableState extends State<WorkRequestsTable> {
                 });
                 Navigator.of(context).pop();
               },
-              child: const Text('Тийм'),
+              child: const Text('Тийм', style: TextStyle(color: Color(0xFF4894FE),)),
             ),
           ],
         );

@@ -277,7 +277,7 @@ class _UndsenPage1State extends State<UndsenPage1> {
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [
-                                      Icon(Icons.category, size: 16, color: Colors.grey[400]),
+                                      Icon(Icons.timer_sharp, size: 16, color: Colors.grey[400]),
                                       SizedBox(width: 4),
                                       Text(
                                         task['category'] ?? '',

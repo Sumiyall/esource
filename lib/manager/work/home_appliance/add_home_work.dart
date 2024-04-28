@@ -161,7 +161,6 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
       'imageUrl': imageUrl,
     };
 
-    // Save the task to Firebase Realtime Database
     final databaseURL = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
     DatabaseReference tasksRef = FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
     tasksRef.push().set(task).then((_) {
@@ -171,10 +170,9 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
       );
     }).catchError((error) {
       print('Error saving task: $error');
-      // Display an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to save the task. Please try again.'),
+          content: Text('zurag hadgalj fail.'),
         ),
       );
     });
