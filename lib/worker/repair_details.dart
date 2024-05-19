@@ -71,33 +71,33 @@ void initState() {
   }
 
   Future<void> _updateTaskDetails() async {
-  final taskId = widget.task['id'];
-  print('Updating task details for taskId: $taskId');
+    final taskId = widget.task['id'];
+    print('Update hiij baina : $taskId');
 
-  final databaseURL =
-      'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
-  DatabaseReference taskRef =
-      FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
+    final databaseURL =
+        'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+    DatabaseReference taskRef =
+        FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks').child(taskId);
 
-  Map<String, int> sanitizedMaterials = {};
-  selectedMaterials.forEach((key, value) {
-    String sanitizedKey = key.replaceAll(RegExp(r'[/\.#$\[\]]'), '_');
-    sanitizedMaterials[sanitizedKey] = value;
-  });
-
-  try {
-    await taskRef.update({
-      'selectedHours': _selectedHours,
-      'status': status,
-      'selectedMaterials': sanitizedMaterials,
-      'totalPrice': _totalPrice,
+    Map<String, int> sanitizedMaterials = {};
+    selectedMaterials.forEach((key, value) {
+      String sanitizedKey = key.replaceAll(RegExp(r'[/\.#$\[\]]'), '_');
+      sanitizedMaterials[sanitizedKey] = value;
     });
-    print('Task details updated successfully');
-  } catch (error) {
-    print('Error updating task details: $error');
-    
+
+    try {
+      await taskRef.update({
+        'selectedHours': _selectedHours,
+        'status': status,
+        'selectedMaterials': sanitizedMaterials,
+        'totalPrice': _totalPrice,
+      });
+      print('Task amjilttai hadgalagdlaa');
+    } catch (error) {
+      print('Task hadgalahad aldaa garlaa: $error');
+      
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +200,7 @@ void initState() {
                 spacing: 8,
                 children: List.generate(10, (index) {
                   return ChoiceChip(
-                    label: Text('${index + 1} hours'),
+                    label: Text('${index + 1} цаг'),
                     selected: _selectedHours == index + 1,
                     onSelected: (selected) {
                       setState(() {

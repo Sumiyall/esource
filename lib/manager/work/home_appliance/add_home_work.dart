@@ -134,57 +134,51 @@ class _AddHomeWorkPageState extends State<AddHomeWorkPage> {
   //   );
   // });}}
   void _submitForm() async {
-  if (_formKey.currentState!.validate() &&
-      _selectedType != null &&
-      _selectedBrand != null &&
-      _selectedModel != null &&
-      _selectedNumber != null) {
-    String imageUrl = '';
-    if (_selectedImage != null) {
-      // Upload the selected image to Firebase Storage
-      final storageRef = FirebaseStorage.instance.ref().child('task_images').child('${DateTime.now().millisecondsSinceEpoch}.jpg');
-      final uploadTask = storageRef.putFile(_selectedImage!);
-      final snapshot = await uploadTask.whenComplete(() {});
-      imageUrl = await snapshot.ref.getDownloadURL();
+    if (_formKey.currentState!.validate() &&
+        _selectedType != null &&
+        _selectedBrand != null &&
+        _selectedModel != null &&
+        _selectedNumber != null) {
+      String imageUrl = '';
+      if (_selectedImage != null) {
+        final storageRef = FirebaseStorage.instance.ref().child('task_images').child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+        final uploadTask = storageRef.putFile(_selectedImage!);
+        final snapshot = await uploadTask.whenComplete(() {});
+        imageUrl = await snapshot.ref.getDownloadURL();
+      }
+
+      final task = {
+        'name': _nameController.text,
+        'phone': _phoneController.text,
+        'address': _addressController.text,
+        'description': _descriptionController.text,
+        'type': _selectedType!,
+        'brand': _selectedBrand!,
+        'model': _selectedModel!,
+        'number': _selectedNumber!,
+        'category': _selectedCategory,
+        'imageUrl': imageUrl,
+      };
+
+      final databaseURL = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
+      DatabaseReference tasksRef = FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
+      tasksRef.push().set(task).then((_) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeTaskListPage()),
+        );
+      }).catchError((error) {
+        print('aldaa: $error');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Зураг хадгалахад алдаа гарлаа.'),
+          ),
+        );
+      });
     }
-
-    final task = {
-      'name': _nameController.text,
-      'phone': _phoneController.text,
-      'address': _addressController.text,
-      'description': _descriptionController.text,
-      'type': _selectedType!,
-      'brand': _selectedBrand!,
-      'model': _selectedModel!,
-      'number': _selectedNumber!,
-      'category': _selectedCategory,
-      'imageUrl': imageUrl,
-    };
-
-    final databaseURL = 'https://esource-bed3f-default-rtdb.asia-southeast1.firebasedatabase.app';
-    DatabaseReference tasksRef = FirebaseDatabase(databaseURL: databaseURL).reference().child('tasks');
-    tasksRef.push().set(task).then((_) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeTaskListPage()),
-      );
-    }).catchError((error) {
-      print('Error saving task: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('zurag hadgalj fail.'),
-        ),
-      );
-    });
   }
-}
 
 
-// hjdfgkjsdfhgl
-//hasdgfjhasd
-// ajshdfasdhjf
-// ahsdflasdhf
-// sdfhal
   @override
   Widget build(BuildContext context) {
     return Scaffold(

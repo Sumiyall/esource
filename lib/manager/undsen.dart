@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'task_process.dart';
+import 'calendar.dart';
 
 class UndsenPage extends StatefulWidget {
   final String userEmail;
@@ -241,35 +242,46 @@ class _UndsenPageState extends State<UndsenPage> {
                       );
                     },
                     child: Card(
-                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      color: Colors.white,
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            task['imageUrl'] != null && task['imageUrl'].isNotEmpty
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.network(
-                                      task['imageUrl'],
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color(0xFF4894FE)!,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: task['imageUrl'] != null && task['imageUrl'].isNotEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image.network(
+                                        task['imageUrl'],
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      child: Icon(Icons.image, color: Color(0xFF4894FE)),
                                     ),
-                                  )
-                                : Container(
-                                    width: 80,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Icon(Icons.image, color: Colors.grey[400]),
-                                  ),
-                            SizedBox(width: 16),
+                            ),
+                            SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,11 +289,11 @@ class _UndsenPageState extends State<UndsenPage> {
                                   Text(
                                     task['name'] ?? '',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 12),
                                   Text(
                                     task['description'] ?? '',
                                     style: TextStyle(
@@ -291,11 +303,11 @@ class _UndsenPageState extends State<UndsenPage> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 12),
                                   Row(
                                     children: [
-                                      Icon(Icons.category, size: 16, color: Colors.grey[400]),
-                                      SizedBox(width: 4),
+                                      Icon(Icons.category, size: 18, color: Colors.grey[400]),
+                                      SizedBox(width: 6),
                                       Text(
                                         task['category'] ?? '',
                                         style: TextStyle(
@@ -323,19 +335,19 @@ class _UndsenPageState extends State<UndsenPage> {
   }
 }
 
-class CalendarPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Calendar Page'),
-      ),
-      body: Center(
-        child: Text('Calendar Page Content'),
-      ),
-    );
-  }
-}
+// class CalendarPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Calendar Page'),
+//       ),
+//       body: Center(
+//         child: Text('Calendar Page Content'),
+//       ),
+//     );
+//   }
+// }
 
 class CallPage extends StatelessWidget {
   @override
