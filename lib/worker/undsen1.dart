@@ -1,3 +1,4 @@
+import 'package:esource/manager/calendar.dart';
 import 'package:esource/worker/repair_details.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -136,12 +137,12 @@ class _UndsenPage1State extends State<UndsenPage1> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CalendarPage()),
-                            );
-                          },
+                          // onTap: () {
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(builder: (context) => CalendarPage()),
+                          //   );
+                          // },
                           child: const Icon(
                             Icons.arrow_forward_ios,
                             color: Colors.white,
@@ -164,7 +165,8 @@ class _UndsenPage1State extends State<UndsenPage1> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CalendarPage()),
+                            MaterialPageRoute(
+                                builder: (context) => CalendarPage()),
                           );
                         },
                         child: Padding(
@@ -179,9 +181,7 @@ class _UndsenPage1State extends State<UndsenPage1> {
                               Text(
                                 'Хуваарь харах',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
+                                    color: Colors.white, fontSize: 16),
                               ),
                             ],
                           ),
@@ -191,24 +191,21 @@ class _UndsenPage1State extends State<UndsenPage1> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CallPage()),
+                            MaterialPageRoute(builder: (context) => CalendarPage()),
                           );
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
-                            children: const [
-                              Icon(
-                                Icons.timer_outlined,
+                            children: [
+                              const Icon(
+                                Icons.work_outline_rounded,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9),
+                              const SizedBox(width: 9),
                               Text(
-                                '11:00 - 12:00 AM',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
+                                'Нийт ${_tasks.length} ажил',
+                                style: const TextStyle(color: Colors.white, fontSize: 15),
                               ),
                             ],
                           ),
@@ -243,35 +240,46 @@ class _UndsenPage1State extends State<UndsenPage1> {
                       );
                     },
                     child: Card(
-                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      color: Colors.white,
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            task['imageUrl'] != null && task['imageUrl'].isNotEmpty
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.network(
-                                      task['imageUrl'],
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color(0xFF4894FE)!,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: task['imageUrl'] != null && task['imageUrl'].isNotEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image.network(
+                                        task['imageUrl'],
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      child: Icon(Icons.image, color: Color(0xFF4894FE)),
                                     ),
-                                  )
-                                : Container(
-                                    width: 80,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Icon(Icons.image, color: Colors.grey[400]),
-                                  ),
-                            SizedBox(width: 16),
+                            ),
+                            SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,11 +287,11 @@ class _UndsenPage1State extends State<UndsenPage1> {
                                   Text(
                                     task['name'] ?? '',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 12),
                                   Text(
                                     task['description'] ?? '',
                                     style: TextStyle(
@@ -293,11 +301,11 @@ class _UndsenPage1State extends State<UndsenPage1> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 12),
                                   Row(
                                     children: [
-                                      Icon(Icons.timer_sharp, size: 16, color: Colors.grey[400]),
-                                      SizedBox(width: 4),
+                                      Icon(Icons.category, size: 18, color: Colors.grey[400]),
+                                      SizedBox(width: 6),
                                       Text(
                                         task['category'] ?? '',
                                         style: TextStyle(
@@ -320,34 +328,6 @@ class _UndsenPage1State extends State<UndsenPage1> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CalendarPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Calendar Page'),
-      ),
-      body: Center(
-        child: Text('Calendar Page Content'),
-      ),
-    );
-  }
-}
-
-class CallPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Call Page'),
-      ),
-      body: Center(
-        child: Text('Call Page Content'),
       ),
     );
   }

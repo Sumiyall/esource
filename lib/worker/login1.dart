@@ -223,6 +223,28 @@ class _LoginPage1State extends State<LoginPage1> {
                   ),
                 ],
               ),
+
+              const SizedBox(height: 40),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    // side: BorderSide(color: Color.fromARGB(255, 28, 100, 225), width: 2),
+                  ),
+                ),
+                child: const Text(
+                  'Буцах',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 28, 100, 225),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

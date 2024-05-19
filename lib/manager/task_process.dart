@@ -39,12 +39,23 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // title: Text(
+        //   'Ажлын явц',
+        //   style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        // ),
+        // automaticallyImplyLeading: true,
+
         title: Text(
           'Ажлын явц',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, color: Colors.white),
         ),
-        automaticallyImplyLeading: true,
+        // centerTitle: true,
+        backgroundColor: Color(0xFF4894FE),
+        iconTheme: IconThemeData(
+          color: Colors.white, 
+        ),
       ),
+      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

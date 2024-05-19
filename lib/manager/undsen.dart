@@ -192,22 +192,21 @@ class _UndsenPageState extends State<UndsenPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CallPage()),
+                            MaterialPageRoute(builder: (context) => CalendarPage()),
                           );
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
-                            children: const [
-                              Icon(
-                                Icons.timer_sharp,
+                            children: [
+                              const Icon(
+                                Icons.work_outline_rounded,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 9),
+                              const SizedBox(width: 9),
                               Text(
-                                '11:00 - 12:00 AM',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                'Нийт ${_tasks.length} ажил',
+                                style: const TextStyle(color: Colors.white, fontSize: 15),
                               ),
                             ],
                           ),

@@ -105,11 +105,21 @@ void initState() {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        // title: const Text(
+        //   'Засварын дэлгэрэнгүй',
+        //   style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        // ),
+        // automaticallyImplyLeading: true,
+
+        title: Text(
           'Засварын дэлгэрэнгүй',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, color: Colors.white),
         ),
-        automaticallyImplyLeading: true,
+        // centerTitle: true,
+        backgroundColor: Color(0xFF4894FE),
+        iconTheme: IconThemeData(
+          color: Colors.white, 
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

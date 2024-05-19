@@ -239,7 +239,7 @@ class _MyWorkPageState extends State<MyWorkPage> {
                       _showWorkDetails(context, task);
                     },
                     child: Card(
-                      color: Colors.white,
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

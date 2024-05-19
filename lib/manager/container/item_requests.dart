@@ -20,11 +20,20 @@ class _ItemRequestPageState extends State<ItemRequestPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        // title: const Text(
+        //   'Ирсэн хүсэлтүүд',
+        //   style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        // ),
+        // automaticallyImplyLeading: true,
+        title: Text(
           'Ирсэн хүсэлтүүд',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, color: Colors.white),
         ),
-        automaticallyImplyLeading: true,
+        // centerTitle: true,
+        backgroundColor: Color(0xFF4894FE),
+        iconTheme: IconThemeData(
+          color: Colors.white, 
+        ),
       ),
       body: itemRequestProvider.pendingRequests.isEmpty
           ? const Center(child: Text('Хүсэлт байхгүй байна'))

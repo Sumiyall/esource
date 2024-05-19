@@ -46,9 +46,19 @@ class _HomeTaskListPageState extends State<HomeTaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        // title: const Text(
+        //   'Нэмэгдсэн ажлууд',
+        //   style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+        // ),
+
+        title: Text(
           'Нэмэгдсэн ажлууд',
-          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28),
+          style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, color: Colors.white),
+        ),
+        // centerTitle: true,
+        backgroundColor: Color(0xFF4894FE),
+        iconTheme: IconThemeData(
+          color: Colors.white, 
         ),
       ),
       body: ListView.builder(

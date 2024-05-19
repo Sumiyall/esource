@@ -78,7 +78,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Хуанли',
+          'Хуваарь',
           style: TextStyle(fontFamily: 'Mogul3', fontSize: 28, color: Colors.white),
         ),
         // centerTitle: true,
@@ -123,7 +123,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
                     children: [
                       SizedBox(height: 8),
                       Text(
-                        'Үлдсэн хугацаа: $timeRemaining',
+                        'Гүйцэтгэх хугацаа: $timeRemaining',
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(height: 8),
